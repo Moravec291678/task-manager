@@ -1,7 +1,14 @@
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Link,
+  useParams,
+} from "react-router-dom";
 import BoardPage from "./pages/BoardPage";
 import BoardsPage from "./pages/BoardsPage";
 function App() {
+  
   return (
     <BrowserRouter>
       <nav>
