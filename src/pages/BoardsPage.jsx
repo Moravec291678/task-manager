@@ -1,4 +1,5 @@
 import { useTask } from "../context/TaskContext";
+import BoardCard from "../components/BoardCard";
 
 function BoardsPage() {
   const { state, dispatch } = useTask();
@@ -7,7 +8,7 @@ function BoardsPage() {
       {state.boards.map((b) => {
         return (
           <div key={b.id}>
-            <h1>{b.title}</h1>
+            <BoardCard board={b}/>
           </div>
         );
       })}
