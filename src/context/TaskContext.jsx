@@ -1,3 +1,4 @@
+import { createContext, useContext, useReducer } from "react";
 const initialState = {
   boards: [
     {
@@ -48,3 +49,23 @@ const initialState = {
     },
   ],
 };
+
+function reducer(state, action) {
+  switch (action.type) {
+    default:
+      return state;
+  }
+}
+
+export const TaskContext = createContext();
+export function TaskProvider({ children }) {
+  const [state, dispatch] = useReducer(reducer, initialState);
+  return (
+    <TaskContext.Provider value={{ state, dispatch }}>
+      {children}
+    </TaskContext.Provider>
+  );
+}
+export function useTask(){
+  return useContext(TaskContext)
+}
