@@ -30,6 +30,21 @@ const initialState = {
       id: "col3",
       boardId: "board1",
     },
+    {
+      title: "To Do",
+      id: "col4",
+      boardId: "board2",
+    },
+    {
+      title: "In Progress",
+      id: "col5",
+      boardId: "board2",
+    },
+    {
+      title: "Done",
+      id: "col6",
+      boardId: "board2",
+    },
   ],
   tasks: [
     {
@@ -46,6 +61,21 @@ const initialState = {
       title: "Set up analytics",
       id: "task3",
       columnId: "col1",
+    },
+    {
+      title: "Research competitors",
+      id: "task4",
+      columnId: "col4",
+    },
+    {
+      title: "Write copy for landing page",
+      id: "task5",
+      columnId: "col4",
+    },
+    {
+      title: "Set up analytics",
+      id: "task6",
+      columnId: "col4",
     },
   ],
 };
@@ -66,6 +96,6 @@ export function TaskProvider({ children }) {
     </TaskContext.Provider>
   );
 }
-export function useTask(){
-  return useContext(TaskContext)
+export function useTask() {
+  return useContext(TaskContext);
 }
