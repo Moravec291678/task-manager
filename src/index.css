@@ -118,6 +118,8 @@ body {
   color: #888;
   cursor: pointer;
   font-size: 12px;
+  width: fit-content;
+  align-self: flex-end;
 }
 
 .btn-delete:hover {
@@ -260,4 +262,15 @@ body {
 .column-add-input:focus {
   outline: none;
   border-color: #4ecdc4;
+}
+
+@media (max-width: 768px) {
+  .columns {
+    flex-wrap: wrap;
+  }
+  
+  .column {
+    flex: 1 1 100%;
+    min-width: unset;
+  }
 }
