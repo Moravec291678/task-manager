@@ -1,0 +1,263 @@
+/* ===== GLOBAL ===== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "DM Sans", "Segoe UI", sans-serif;
+}
+
+body {
+  background: #0f0f13;
+  color: #e8e8f0;
+  min-height: 100vh;
+}
+
+/* ===== NAVBAR ===== */
+
+.navbar {
+  background: #16161d;
+  border-bottom: 1px solid #2a2a35;
+  height: 56px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 24px;
+}
+
+.navbar-logo {
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: -0.5px;
+}
+
+.navbar-logo span {
+  color: #4ecdc4;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 10px;
+}
+
+.navbar-link {
+  text-decoration: none;
+  color: #888;
+  font-size: 13px;
+  padding: 6px 14px;
+  border-radius: 8px;
+  transition: 0.15s;
+}
+
+.navbar-link:hover {
+  background: #2a2a35;
+  color: #fff;
+}
+
+/* ===== MAIN CONTENT ===== */
+
+.main-content {
+  padding: 28px;
+}
+
+/* ===== BOARDS PAGE ===== */
+
+.boards-page-title {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.boards-add {
+  margin-top: 16px;
+  margin-bottom: 28px;
+  display: flex;
+  gap: 10px;
+}
+
+.boards-add-input {
+  background: #16161d;
+  border: 1px solid #2a2a35;
+  color: #fff;
+
+  padding: 10px 14px;
+  border-radius: 8px;
+
+  font-size: 14px;
+}
+
+.boards-add-input:focus {
+  outline: none;
+  border-color: #4ecdc4;
+}
+
+/* ===== BUTTONS ===== */
+
+.btn-add {
+  background: #4ecdc4;
+  border: none;
+  border-radius: 8px;
+
+  padding: 10px 16px;
+  font-weight: 600;
+  font-size: 13px;
+
+  color: #0f0f13;
+  cursor: pointer;
+}
+
+.btn-add:hover {
+  opacity: 0.9;
+}
+
+.btn-delete {
+  background: transparent;
+  border: none;
+  color: #888;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.btn-delete:hover {
+  color: #ff6b6b;
+}
+
+/* ===== BOARDS GRID ===== */
+
+.boards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+/* ===== BOARD CARD ===== */
+
+.board-card {
+  background: #16161d;
+  border: 1px solid #2a2a35;
+
+  border-radius: 14px;
+  padding: 20px;
+
+  cursor: pointer;
+  transition: 0.15s;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.board-card:hover {
+  transform: translateY(-3px);
+  border-color: #4ecdc4;
+}
+
+.board-card-icon {
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+.board-card-title {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.board-card-date {
+  font-size: 12px;
+  color: #888;
+}
+
+/* ===== BOARD PAGE ===== */
+
+.board-page-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+/* ===== COLUMNS ===== */
+
+.columns {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+}
+
+/* ===== COLUMN ===== */
+
+.column {
+  background: #16161d;
+  border: 1px solid #2a2a35;
+
+  border-radius: 14px;
+  padding: 16px;
+
+  min-width: 280px;
+  flex: 0 0 280px;
+}
+
+.column-title {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+/* ===== TASKS ===== */
+
+.column-tasks {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ===== TASK CARD ===== */
+
+.task {
+  background: #0f0f13;
+  border: 1px solid #2a2a35;
+
+  border-radius: 10px;
+  padding: 14px;
+
+  transition: 0.15s;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.task:hover {
+  border-color: #3a3a45;
+}
+
+.task-title {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* ===== ADD TASK AREA ===== */
+
+.column-add {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.column-add-input {
+  background: #0f0f13;
+  border: 1px solid #2a2a35;
+  color: #fff;
+
+  padding: 8px 10px;
+  border-radius: 8px;
+}
+
+.column-add-input:focus {
+  outline: none;
+  border-color: #4ecdc4;
+}

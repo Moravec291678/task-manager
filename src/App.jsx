@@ -1,25 +1,25 @@
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Link,
-  useParams,
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import BoardPage from "./pages/BoardPage";
 import BoardsPage from "./pages/BoardsPage";
+import { TaskProvider } from "./context/TaskContext";
+
 function App() {
-  
   return (
     <BrowserRouter>
-      <nav>
-        <Link to="/">Boards</Link>
-        <Link to="/board/:1">Board Detail</Link>
-      </nav>
-
-      <Routes>
-        <Route path="/" element={<BoardsPage />}></Route>
-        <Route path="/board/:id" element={<BoardPage />}></Route>
-      </Routes>
+      <TaskProvider>
+        <nav className="navbar">
+          <div className="navbar-logo">TaskManager</div>
+          <div className="navbar-links">
+            <Link className="navbar-link" to="/">Nástěnky</Link>
+          </div>
+        </nav>
+        <main className="main-content">
+          <Routes>
+            <Route path="/" element={<BoardsPage />} />
+            <Route path="/board/:id" element={<BoardPage />} />
+          </Routes>
+        </main>
+      </TaskProvider>
     </BrowserRouter>
   );
 }

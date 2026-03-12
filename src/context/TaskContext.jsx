@@ -3,13 +3,13 @@ const initialState = {
   boards: [
     {
       title: "Work",
-      icon: "Url",
+      icon: "💼",
       lastOpened: "Pred 18 minutami",
       id: "board1",
     },
     {
       title: "School",
-      icon: "Url",
+      icon: "💼",
       lastOpened: "4 dny",
       id: "board2",
     },
@@ -97,7 +97,32 @@ function reducer(state, action) {
     case "DELETE_TASK":
       return {
         ...state,
-        tasks: state.tasks.filter((t) => t.id !== action.payload)
+        tasks: state.tasks.filter((t) => t.id !== action.payload),
+      };
+    case "ADD_BOARD":
+      return {
+        ...state,
+        boards: [
+          ...state.boards,
+          {
+            id: Date.now(),
+            icon: "💼",
+            lastOpened: new Date().toLocaleDateString(),
+            title: action.payload,
+          },
+        ],
+      };
+    case "DELETE_BOARD":
+      const deletedColumnIds = state.columns
+        .filter((c) => c.boardId === action.payload)
+        .map((c) => c.id);
+      return {
+        ...state,
+        boards: state.boards.filter((b) => b.id !== action.payload),
+        columns: state.columns.filter((c) => c.boardId !== action.payload),
+        tasks: state.tasks.filter(
+          (t) => !deletedColumnIds.includes(t.columnId),
+        ),
       };
     default:
       return state;
