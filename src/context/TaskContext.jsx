@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer } from "react";
+import { act, createContext, useContext, useReducer } from "react";
 const initialState = {
   boards: [
     {
@@ -123,6 +123,17 @@ function reducer(state, action) {
         tasks: state.tasks.filter(
           (t) => !deletedColumnIds.includes(t.columnId),
         ),
+      };
+    case "MOVE_TASK":
+      return {
+        ...state,
+        tasks: state.tasks.map((t) => {
+          if (t.id === action.payload.taskId) {
+            return { ...t, columnId: action.payload.newColumnId };
+          } else {
+            return t;
+          }
+        }),
       };
     default:
       return state;
