@@ -121,6 +121,8 @@ function reducer(state, action) {
         columns: state.columns.filter((c) => c.id !== action.payload),
         tasks: state.tasks.filter((t) => !deletedTasksIds.includes(t.id)),
       };
+    case "RENAME_COLUMN": 
+      return{...state, columns: state.columns.map((c) => c.id === action.payload.columnId ? {...c, title: action.payload.title} : c)};
     case "ADD_BOARD":
       const newBoardId = String(Date.now());
       return {

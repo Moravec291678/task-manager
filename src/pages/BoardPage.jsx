@@ -13,6 +13,8 @@ function BoardPage() {
   const [showInput, setShowInput] = useState(false);
   const [columnTitle, setColumnTitle] = useState("");
   const [openMenu, setOpenMenu] = useState();
+  const [renamingColumnId, setRenamingColumnId] = useState();
+  const [renameColumnValue, setRenameColumnValue] = useState("");
   if (!board) {
     return (
       <div style={{ padding: 40 }}>
@@ -42,7 +44,35 @@ function BoardPage() {
             return (
               <div className="column" key={c.id}>
                 <div className="column-header">
-                  <h2 className="column-title">{c.title}</h2>
+                  {renamingColumnId === c.id ? (
+                    <>
+                      <input
+                        type="text"
+                        value={renameColumnValue}
+                        onChange={(e) => setRenameColumnValue(e.target.value)}
+                      />
+                      <button
+                        onClick={() => {
+                          dispatch({
+                            type: "RENAME_COLUMN",
+                            payload: {
+                              columnId: c.id,
+                              title: renameColumnValue,
+                            },
+                          });
+                          setRenamingColumnId(null);
+                        }}
+                      >
+                        Ulozit
+                      </button>
+                      <button onClick={() => setRenamingColumnId(null)}>
+                        X
+                      </button>
+                    </>
+                  ) : (
+                    <h2 className="column-title">{c.title}</h2>
+                  )}
+
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
@@ -53,7 +83,15 @@ function BoardPage() {
                   </button>
                   {openMenu === c.id && (
                     <div className="dropdown">
-                      <button>Přejmenovat</button>
+                      <button
+                        onClick={() => {
+                          setRenamingColumnId(c.id);
+                          setRenameColumnValue(c.title);
+                          setOpenMenu(null);
+                        }}
+                      >
+                        Přejmenovat
+                      </button>
                       <button
                         onClick={() => {
                           dispatch({ type: "DELETE_COLUMN", payload: c.id });
