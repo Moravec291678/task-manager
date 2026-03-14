@@ -112,6 +112,15 @@ function reducer(state, action) {
           },
         ],
       };
+    case "DELETE_COLUMN":
+      const deletedTasksIds = state.tasks
+        .filter((t) => t.columnId === action.payload)
+        .map((t) => t.id);
+      return {
+        ...state,
+        columns: state.columns.filter((c) => c.id !== action.payload),
+        tasks: state.tasks.filter((t) => !deletedTasksIds.includes(t.id)),
+      };
     case "ADD_BOARD":
       const newBoardId = String(Date.now());
       return {

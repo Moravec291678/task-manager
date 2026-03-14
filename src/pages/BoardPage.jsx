@@ -12,6 +12,7 @@ function BoardPage() {
   const [inputs, setInputs] = useState({});
   const [showInput, setShowInput] = useState(false);
   const [columnTitle, setColumnTitle] = useState("");
+  const [openMenu, setOpenMenu] = useState();
   if (!board) {
     return (
       <div style={{ padding: 40 }}>
@@ -32,7 +33,7 @@ function BoardPage() {
     });
   };
   return (
-    <div className="board-page">
+    <div className="board-page" onClick={() => setOpenMenu(null)}>
       <h1 className="board-page-title">{board.title}</h1>
       <DragDropContext onDragEnd={handleDragEnd}>
         <div className="columns">
@@ -40,7 +41,30 @@ function BoardPage() {
             const columnTasks = state.tasks.filter((t) => t.columnId === c.id);
             return (
               <div className="column" key={c.id}>
-                <h2 className="column-title">{c.title}</h2>
+                <div className="column-header">
+                  <h2 className="column-title">{c.title}</h2>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setOpenMenu(openMenu === c.id ? null : c.id);
+                    }}
+                  >
+                    ...
+                  </button>
+                  {openMenu === c.id && (
+                    <div className="dropdown">
+                      <button>Přejmenovat</button>
+                      <button
+                        onClick={() => {
+                          dispatch({ type: "DELETE_COLUMN", payload: c.id });
+                          setOpenMenu(null);
+                        }}
+                      >
+                        Smazat
+                      </button>
+                    </div>
+                  )}
+                </div>
                 <Droppable droppableId={c.id}>
                   {(provided) => (
                     <div
@@ -123,8 +147,8 @@ function BoardPage() {
                       type: "ADD_COLUMN",
                       payload: { title: columnTitle, boardId: id },
                     });
-                    setColumnTitle("")
-                    setShowInput(false)
+                    setColumnTitle("");
+                    setShowInput(false);
                   }
                 }}
               >
