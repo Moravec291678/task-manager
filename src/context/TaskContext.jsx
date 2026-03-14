@@ -100,6 +100,18 @@ function reducer(state, action) {
         ...state,
         tasks: state.tasks.filter((t) => t.id !== action.payload),
       };
+    case "ADD_COLUMN":
+      return {
+        ...state,
+        columns: [
+          ...state.columns,
+          {
+            id: String(Date.now()),
+            title: action.payload.title,
+            boardId: action.payload.boardId,
+          },
+        ],
+      };
     case "ADD_BOARD":
       const newBoardId = String(Date.now());
       return {

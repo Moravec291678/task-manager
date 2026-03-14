@@ -10,6 +10,8 @@ function BoardPage() {
   const board = state.boards.find((b) => b.id === id);
   const columns = state.columns.filter((c) => c.boardId === id);
   const [inputs, setInputs] = useState({});
+  const [showInput, setShowInput] = useState(false);
+  const [columnTitle, setColumnTitle] = useState("");
   if (!board) {
     return (
       <div style={{ padding: 40 }}>
@@ -107,6 +109,32 @@ function BoardPage() {
               </div>
             );
           })}
+          {showInput ? (
+            <>
+              <input
+                type="text"
+                value={columnTitle}
+                onChange={(e) => setColumnTitle(e.target.value)}
+              />
+              <button
+                onClick={() => {
+                  if (columnTitle) {
+                    dispatch({
+                      type: "ADD_COLUMN",
+                      payload: { title: columnTitle, boardId: id },
+                    });
+                    setColumnTitle("")
+                    setShowInput(false)
+                  }
+                }}
+              >
+                Ulozit
+              </button>
+              <button onClick={() => setShowInput(false)}>X</button>
+            </>
+          ) : (
+            <button onClick={() => setShowInput(true)}>Pridat</button>
+          )}
         </div>
       </DragDropContext>
     </div>
