@@ -1,4 +1,5 @@
-import { act, createContext, useContext, useReducer } from "react";
+import { createContext, useContext, useReducer } from "react";
+import { useEffect } from "react";
 const initialState = {
   boards: [
     {
@@ -100,16 +101,27 @@ function reducer(state, action) {
         tasks: state.tasks.filter((t) => t.id !== action.payload),
       };
     case "ADD_BOARD":
+      const newBoardId = String(Date.now());
       return {
         ...state,
         boards: [
           ...state.boards,
           {
-            id: Date.now(),
+            id: newBoardId,
             icon: "💼",
             lastOpened: new Date().toLocaleDateString(),
             title: action.payload,
           },
+        ],
+        columns: [
+          ...state.columns,
+          { title: "ToDo", id: String(Date.now() + 1), boardId: newBoardId },
+          {
+            title: "In Progress",
+            id: String(Date.now() + 2),
+            boardId: newBoardId,
+          },
+          { title: "Done", id: String(Date.now() + 3), boardId: newBoardId },
         ],
       };
     case "DELETE_BOARD":
@@ -142,7 +154,13 @@ function reducer(state, action) {
 
 export const TaskContext = createContext();
 export function TaskProvider({ children }) {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(
+    reducer,
+    JSON.parse(localStorage.getItem("task")) || initialState,
+  );
+  useEffect(() => {
+    localStorage.setItem("task", JSON.stringify(state));
+  }, [state]);
   return (
     <TaskContext.Provider value={{ state, dispatch }}>
       {children}
