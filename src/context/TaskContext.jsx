@@ -50,31 +50,37 @@ const initialState = {
   tasks: [
     {
       title: "Research competitors",
+      desc: "",
       id: "task1",
       columnId: "col1",
     },
     {
       title: "Write copy for landing page",
+      desc: "",
       id: "task2",
       columnId: "col1",
     },
     {
       title: "Set up analytics",
+      desc: "",
       id: "task3",
       columnId: "col1",
     },
     {
       title: "Research competitors",
+      desc: "",
       id: "task4",
       columnId: "col4",
     },
     {
       title: "Write copy for landing page",
+      desc: "",
       id: "task5",
       columnId: "col4",
     },
     {
       title: "Set up analytics",
+      desc: "",
       id: "task6",
       columnId: "col4",
     },
@@ -89,9 +95,10 @@ function reducer(state, action) {
         tasks: [
           ...state.tasks,
           {
-            id: Date.now(),
+            id: String(Date.now()),
             title: action.payload.title,
             columnId: action.payload.columnId,
+            desc: "",
           },
         ],
       };
@@ -100,6 +107,8 @@ function reducer(state, action) {
         ...state,
         tasks: state.tasks.filter((t) => t.id !== action.payload),
       };
+    case "UPDATE_DESCRIPTION":
+      return {};
     case "ADD_COLUMN":
       return {
         ...state,
@@ -121,8 +130,15 @@ function reducer(state, action) {
         columns: state.columns.filter((c) => c.id !== action.payload),
         tasks: state.tasks.filter((t) => !deletedTasksIds.includes(t.id)),
       };
-    case "RENAME_COLUMN": 
-      return{...state, columns: state.columns.map((c) => c.id === action.payload.columnId ? {...c, title: action.payload.title} : c)};
+    case "RENAME_COLUMN":
+      return {
+        ...state,
+        columns: state.columns.map((c) =>
+          c.id === action.payload.columnId
+            ? { ...c, title: action.payload.title }
+            : c,
+        ),
+      };
     case "ADD_BOARD":
       const newBoardId = String(Date.now());
       return {

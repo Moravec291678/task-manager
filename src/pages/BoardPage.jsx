@@ -3,6 +3,7 @@ import { useTask } from "../context/TaskContext";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
+import TaskModal from "../components/TaskModal";
 
 function BoardPage() {
   const { state, dispatch } = useTask();
@@ -15,6 +16,7 @@ function BoardPage() {
   const [openMenu, setOpenMenu] = useState();
   const [renamingColumnId, setRenamingColumnId] = useState();
   const [renameColumnValue, setRenameColumnValue] = useState("");
+  const [selectedTask, setSelectedTask] = useState(null);
   if (!board) {
     return (
       <div style={{ padding: 40 }}>
@@ -118,6 +120,7 @@ function BoardPage() {
                         >
                           {(provided) => (
                             <div
+                              onClick={() => setSelectedTask(t)}
                               className="task"
                               {...provided.draggableProps}
                               {...provided.dragHandleProps}
@@ -126,12 +129,13 @@ function BoardPage() {
                               <p className="task-title">{t.title}</p>
                               <button
                                 className="btn-delete"
-                                onClick={() =>
+                                onClick={(e) => {
+                                  e.stopPropagation();
                                   dispatch({
                                     type: "DELETE_TASK",
                                     payload: t.id,
-                                  })
-                                }
+                                  });
+                                }}
                               >
                                 Smazat
                               </button>
@@ -199,6 +203,14 @@ function BoardPage() {
           )}
         </div>
       </DragDropContext>
+      {selectedTask && (
+        
+          <TaskModal
+            onClose={() => setSelectedTask(null)}
+            task={selectedTask}
+          />
+        
+      )}
     </div>
   );
 }
