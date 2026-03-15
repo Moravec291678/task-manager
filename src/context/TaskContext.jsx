@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer } from "react";
+import { act, createContext, useContext, useReducer } from "react";
 import { useEffect } from "react";
 const initialState = {
   boards: [
@@ -64,6 +64,7 @@ function reducer(state, action) {
             desc: "",
             comments: [],
             label: "",
+            deadline: { from: "", to: "" },
           },
         ],
       };
@@ -87,6 +88,18 @@ function reducer(state, action) {
         tasks: state.tasks.map((t) => {
           return t.id === action.payload.taskId
             ? { ...t, label: action.payload.label }
+            : t;
+        }),
+      };
+    case "UPDATE_DEADLINE":
+      return {
+        ...state,
+        tasks: state.tasks.map((t) => {
+          return t.id === action.payload.taskId
+            ? {
+                ...t,
+                deadline: { from: action.payload.from, to: action.payload.to },
+              }
             : t;
         }),
       };

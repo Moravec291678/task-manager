@@ -11,6 +11,9 @@ function TaskModal({ task, onClose }) {
     return c.id === task.columnId;
   });
   const taskLabel = currentTask.label || "";
+  const [deadline, setDeadline] = useState(
+    currentTask.deadline || { from: "", to: "" },
+  );
 
   useEffect(() => {
     setTaskDesc(currentTask?.desc || "");
@@ -30,7 +33,10 @@ function TaskModal({ task, onClose }) {
             onClick={() =>
               dispatch({
                 type: "UPDATE_LABEL",
-                payload: { taskId: currentTask.id, label: "high" },
+                payload: {
+                  taskId: currentTask.id,
+                  label: taskLabel === "high" ? "" : "high",
+                },
               })
             }
           >
@@ -41,7 +47,10 @@ function TaskModal({ task, onClose }) {
             onClick={() =>
               dispatch({
                 type: "UPDATE_LABEL",
-                payload: { taskId: currentTask.id, label: "medium" },
+                payload: {
+                  taskId: currentTask.id,
+                  label: taskLabel === "medium" ? "" : "medium",
+                },
               })
             }
           >
@@ -52,12 +61,48 @@ function TaskModal({ task, onClose }) {
             onClick={() =>
               dispatch({
                 type: "UPDATE_LABEL",
-                payload: { taskId: currentTask.id, label: "low" },
+                payload: {
+                  taskId: currentTask.id,
+                  label: taskLabel === "low" ? "" : "low",
+                },
               })
             }
           >
             Nizka
           </button>
+          <p>Termin</p>
+          <input
+            type="date"
+            value={deadline.from}
+            onChange={(e) => {
+              const newDeadline = { ...deadline, from: e.target.value };
+              setDeadline(newDeadline);
+              dispatch({
+                type: "UPDATE_DEADLINE",
+                payload: {
+                  taskId: currentTask.id,
+                  from: newDeadline.from,
+                  to: newDeadline.to,
+                },
+              });
+            }}
+          />
+          <input
+            type="date"
+            value={deadline.to}
+            onChange={(e) => {
+              const newDeadline = { ...deadline, to: e.target.value };
+              setDeadline(newDeadline);
+              dispatch({
+                type: "UPDATE_DEADLINE",
+                payload: {
+                  taskId: currentTask.id,
+                  from: newDeadline.from,
+                  to: newDeadline.to,
+                },
+              });
+            }}
+          />
           {changeDesc ? (
             <>
               <textarea
