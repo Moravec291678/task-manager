@@ -65,6 +65,7 @@ function reducer(state, action) {
             comments: [],
             label: "",
             deadline: { from: "", to: "" },
+            done: false,
           },
         ],
       };
@@ -99,6 +100,18 @@ function reducer(state, action) {
             ? {
                 ...t,
                 deadline: { from: action.payload.from, to: action.payload.to },
+              }
+            : t;
+        }),
+      };
+    case "TOGGLE_DONE":
+      return {
+        ...state,
+        tasks: state.tasks.map((t) => {
+          return t.id === action.payload.taskId
+            ? {
+                ...t,
+                done: !t.done,
               }
             : t;
         }),

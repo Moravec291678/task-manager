@@ -14,6 +14,23 @@ function TaskModal({ task, onClose }) {
   const [deadline, setDeadline] = useState(
     currentTask.deadline || { from: "", to: "" },
   );
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const fromDate = deadline.from ? new Date(deadline.from) : null;
+  const toDate = deadline.to ? new Date(deadline.to) : null;
+  const isDone = currentTask.done;
+
+  const deadlineStatus = isDone
+    ? "done"
+    : !fromDate && !toDate
+      ? null
+      : toDate && toDate < today
+        ? "overdue"
+        : toDate && toDate.toDateString() === today.toDateString()
+          ? "today"
+          : fromDate && fromDate > today
+            ? "planned"
+            : "inprogress";
 
   useEffect(() => {
     setTaskDesc(currentTask?.desc || "");
@@ -74,6 +91,7 @@ function TaskModal({ task, onClose }) {
           <input
             type="date"
             value={deadline.from}
+            max={deadline.to}
             onChange={(e) => {
               const newDeadline = { ...deadline, from: e.target.value };
               setDeadline(newDeadline);
@@ -90,6 +108,7 @@ function TaskModal({ task, onClose }) {
           <input
             type="date"
             value={deadline.to}
+            min={deadline.from}
             onChange={(e) => {
               const newDeadline = { ...deadline, to: e.target.value };
               setDeadline(newDeadline);
@@ -103,6 +122,43 @@ function TaskModal({ task, onClose }) {
               });
             }}
           />
+          {deadlineStatus && (
+            <span
+              style={{
+                color:
+                  deadlineStatus === "overdue"
+                    ? "#ff6b6b"
+                    : deadlineStatus === "today"
+                      ? "#f5a623"
+                      : deadlineStatus === "done"
+                        ? "#4ecdc4"
+                        : deadlineStatus === "inprogress"
+                          ? "#4ecdc4"
+                          : "#888",
+              }}
+            >
+              {deadlineStatus === "overdue"
+                ? "Po splatnosti"
+                : deadlineStatus === "today"
+                  ? "Dnes končí"
+                  : deadlineStatus === "done"
+                    ? "Splněno"
+                    : deadlineStatus === "inprogress"
+                      ? "Probíhá"
+                      : "Naplánováno"}
+            </span>
+          )}
+          <input
+            type="checkbox"
+            checked={currentTask.done}
+            onChange={() => {
+              dispatch({
+                type: "TOGGLE_DONE",
+                payload: { taskId: currentTask.id },
+              });
+            }}
+          />{" "}
+          <p>splneno</p>
           {changeDesc ? (
             <>
               <textarea
