@@ -7,50 +7,95 @@ function TaskModal({ task, onClose }) {
   const { dispatch, state } = useTask();
   const currentTask = state.tasks.find((t) => t.id === task.id);
   const [changeDesc, setChangeDesc] = useState(false);
+  const taskInColumn = state.columns.find((c) => {
+    return c.id === task.columnId;
+  });
+  const taskLabel = currentTask.label || "";
+
   useEffect(() => {
     setTaskDesc(currentTask?.desc || "");
   }, [task]);
   if (!task) return null;
 
   return (
-    <div className="overlay">
-      <h1>{task.title}</h1>
-
-      {changeDesc ? (
-        <>
-          <textarea
-            name=""
-            id=""
-            value={taskDesc}
-            onChange={(e) => setTaskDesc(e.target.value)}
-          ></textarea>
+    <div className="overlay" onClick={onClose}>
+      <div className="modal" onClick={(e) => e.stopPropagation()}>
+        <div className="modal-header">Ve sloupci: {taskInColumn?.title}</div>
+        <button onClick={onClose}>X</button>
+        <h1>{task.title}</h1>
+        <div className="modal-body">
+          <p>PRIORITA</p>
           <button
-            onClick={() => {
+            style={{ opacity: taskLabel && taskLabel !== "high" ? 0.3 : 1 }}
+            onClick={() =>
               dispatch({
-                type: "UPDATE_DESCRIPTION",
-                payload: { taskId: task.id, desc: taskDesc },
-              });
-              setChangeDesc(false);
-            }}
+                type: "UPDATE_LABEL",
+                payload: { taskId: currentTask.id, label: "high" },
+              })
+            }
           >
-            Ulozit popisek
+            Vysoka
           </button>
           <button
-            onClick={() => {
-              setTaskDesc(currentTask?.desc || "");
-              setChangeDesc(false);
-            }}
+            style={{ opacity: taskLabel && taskLabel !== "medium" ? 0.3 : 1 }}
+            onClick={() =>
+              dispatch({
+                type: "UPDATE_LABEL",
+                payload: { taskId: currentTask.id, label: "medium" },
+              })
+            }
           >
-            X
+            Normalni
           </button>
-        </>
-      ) : (
-        <>
-          <p>{taskDesc}</p>
-          <button onClick={() => setChangeDesc(true)}>Upravit popisek</button>
-          <button onClick={onClose}>X</button>
-        </>
-      )}
+          <button
+            style={{ opacity: taskLabel && taskLabel !== "low" ? 0.3 : 1 }}
+            onClick={() =>
+              dispatch({
+                type: "UPDATE_LABEL",
+                payload: { taskId: currentTask.id, label: "low" },
+              })
+            }
+          >
+            Nizka
+          </button>
+          {changeDesc ? (
+            <>
+              <textarea
+                name=""
+                id=""
+                value={taskDesc}
+                onChange={(e) => setTaskDesc(e.target.value)}
+              ></textarea>
+              <button
+                onClick={() => {
+                  dispatch({
+                    type: "UPDATE_DESCRIPTION",
+                    payload: { taskId: task.id, desc: taskDesc },
+                  });
+                  setChangeDesc(false);
+                }}
+              >
+                Ulozit popisek
+              </button>
+              <button
+                onClick={() => {
+                  setTaskDesc(currentTask?.desc || "");
+                  setChangeDesc(false);
+                }}
+              >
+                X
+              </button>
+            </>
+          ) : (
+            <>
+              <p>{taskDesc}</p>
+              <button onClick={() => setChangeDesc(true)}>
+                Upravit popisek
+              </button>
+            </>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

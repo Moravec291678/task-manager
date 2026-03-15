@@ -47,44 +47,7 @@ const initialState = {
       boardId: "board2",
     },
   ],
-  tasks: [
-    {
-      title: "Research competitors",
-      desc: "",
-      id: "task1",
-      columnId: "col1",
-    },
-    {
-      title: "Write copy for landing page",
-      desc: "",
-      id: "task2",
-      columnId: "col1",
-    },
-    {
-      title: "Set up analytics",
-      desc: "",
-      id: "task3",
-      columnId: "col1",
-    },
-    {
-      title: "Research competitors",
-      desc: "",
-      id: "task4",
-      columnId: "col4",
-    },
-    {
-      title: "Write copy for landing page",
-      desc: "",
-      id: "task5",
-      columnId: "col4",
-    },
-    {
-      title: "Set up analytics",
-      desc: "",
-      id: "task6",
-      columnId: "col4",
-    },
-  ],
+  tasks: [],
 };
 
 function reducer(state, action) {
@@ -99,6 +62,8 @@ function reducer(state, action) {
             title: action.payload.title,
             columnId: action.payload.columnId,
             desc: "",
+            comments: [],
+            label: "",
           },
         ],
       };
@@ -113,6 +78,15 @@ function reducer(state, action) {
         tasks: state.tasks.map((t) => {
           return t.id === action.payload.taskId
             ? { ...t, desc: action.payload.desc }
+            : t;
+        }),
+      };
+    case "UPDATE_LABEL":
+      return {
+        ...state,
+        tasks: state.tasks.map((t) => {
+          return t.id === action.payload.taskId
+            ? { ...t, label: action.payload.label }
             : t;
         }),
       };
