@@ -108,7 +108,14 @@ function reducer(state, action) {
         tasks: state.tasks.filter((t) => t.id !== action.payload),
       };
     case "UPDATE_DESCRIPTION":
-      return {};
+      return {
+        ...state,
+        tasks: state.tasks.map((t) => {
+          return t.id === action.payload.taskId
+            ? { ...t, desc: action.payload.desc }
+            : t;
+        }),
+      };
     case "ADD_COLUMN":
       return {
         ...state,
