@@ -17,6 +17,7 @@ function BoardPage() {
   const [renamingColumnId, setRenamingColumnId] = useState();
   const [renameColumnValue, setRenameColumnValue] = useState("");
   const [selectedTask, setSelectedTask] = useState(null);
+
   if (!board) {
     return (
       <div style={{ padding: 40 }}>
@@ -25,6 +26,7 @@ function BoardPage() {
       </div>
     );
   }
+
   const handleDragEnd = (result) => {
     console.log(result);
     if (!result.destination) return;
@@ -36,6 +38,7 @@ function BoardPage() {
       },
     });
   };
+
   return (
     <div className="board-page" onClick={() => setOpenMenu(null)}>
       <h1 className="board-page-title">{board.title}</h1>
@@ -47,45 +50,50 @@ function BoardPage() {
               <div className="column" key={c.id}>
                 <div className="column-header">
                   {renamingColumnId === c.id ? (
-                    <>
+                    <div className="column-rename">
                       <input
+                        className="column-rename-input"
                         type="text"
                         value={renameColumnValue}
                         onChange={(e) => setRenameColumnValue(e.target.value)}
                       />
                       <button
+                        className="btn-save"
                         onClick={() => {
                           dispatch({
                             type: "RENAME_COLUMN",
-                            payload: {
-                              columnId: c.id,
-                              title: renameColumnValue,
-                            },
+                            payload: { columnId: c.id, title: renameColumnValue },
                           });
                           setRenamingColumnId(null);
                         }}
                       >
-                        Ulozit
+                        Uložit
                       </button>
-                      <button onClick={() => setRenamingColumnId(null)}>
-                        X
+                      <button
+                        className="btn-cancel"
+                        onClick={() => setRenamingColumnId(null)}
+                      >
+                        ✕
                       </button>
-                    </>
+                    </div>
                   ) : (
                     <h2 className="column-title">{c.title}</h2>
                   )}
 
                   <button
+                    className="column-menu-btn"
                     onClick={(e) => {
                       e.stopPropagation();
                       setOpenMenu(openMenu === c.id ? null : c.id);
                     }}
                   >
-                    ...
+                    ···
                   </button>
+
                   {openMenu === c.id && (
                     <div className="dropdown">
                       <button
+                        className="dropdown-item"
                         onClick={() => {
                           setRenamingColumnId(c.id);
                           setRenameColumnValue(c.title);
@@ -95,6 +103,7 @@ function BoardPage() {
                         Přejmenovat
                       </button>
                       <button
+                        className="dropdown-item dropdown-item--danger"
                         onClick={() => {
                           dispatch({ type: "DELETE_COLUMN", payload: c.id });
                           setOpenMenu(null);
@@ -105,6 +114,7 @@ function BoardPage() {
                     </div>
                   )}
                 </div>
+
                 <Droppable droppableId={c.id}>
                   {(provided) => (
                     <div
@@ -131,10 +141,7 @@ function BoardPage() {
                                 className="btn-delete"
                                 onClick={(e) => {
                                   e.stopPropagation();
-                                  dispatch({
-                                    type: "DELETE_TASK",
-                                    payload: t.id,
-                                  });
+                                  dispatch({ type: "DELETE_TASK", payload: t.id });
                                 }}
                               >
                                 Smazat
@@ -147,6 +154,7 @@ function BoardPage() {
                     </div>
                   )}
                 </Droppable>
+
                 <div className="column-add">
                   <input
                     className="column-add-input"
@@ -175,41 +183,56 @@ function BoardPage() {
               </div>
             );
           })}
-          {showInput ? (
-            <>
-              <input
-                type="text"
-                value={columnTitle}
-                onChange={(e) => setColumnTitle(e.target.value)}
-              />
+
+          {/* PŘIDAT SLOUPEC */}
+          <div className="column-add-new">
+            {showInput ? (
+              <div className="column-add-new-form">
+                <input
+                  className="column-add-new-input"
+                  type="text"
+                  placeholder="Název sloupce..."
+                  value={columnTitle}
+                  onChange={(e) => setColumnTitle(e.target.value)}
+                />
+                <div className="column-add-new-actions">
+                  <button
+                    className="btn-add"
+                    onClick={() => {
+                      if (columnTitle) {
+                        dispatch({
+                          type: "ADD_COLUMN",
+                          payload: { title: columnTitle, boardId: id },
+                        });
+                        setColumnTitle("");
+                        setShowInput(false);
+                      }
+                    }}
+                  >
+                    Uložit
+                  </button>
+                  <button
+                    className="btn-cancel"
+                    onClick={() => setShowInput(false)}
+                  >
+                    ✕
+                  </button>
+                </div>
+              </div>
+            ) : (
               <button
-                onClick={() => {
-                  if (columnTitle) {
-                    dispatch({
-                      type: "ADD_COLUMN",
-                      payload: { title: columnTitle, boardId: id },
-                    });
-                    setColumnTitle("");
-                    setShowInput(false);
-                  }
-                }}
+                className="btn-add-column"
+                onClick={() => setShowInput(true)}
               >
-                Ulozit
+                + Přidat sloupec
               </button>
-              <button onClick={() => setShowInput(false)}>X</button>
-            </>
-          ) : (
-            <button onClick={() => setShowInput(true)}>Pridat</button>
-          )}
+            )}
+          </div>
         </div>
       </DragDropContext>
+
       {selectedTask && (
-        
-          <TaskModal
-            onClose={() => setSelectedTask(null)}
-            task={selectedTask}
-          />
-        
+        <TaskModal onClose={() => setSelectedTask(null)} task={selectedTask} />
       )}
     </div>
   );

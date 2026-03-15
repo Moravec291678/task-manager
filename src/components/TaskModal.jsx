@@ -40,161 +40,185 @@ function TaskModal({ task, onClose }) {
   return (
     <div className="overlay" onClick={onClose}>
       <div className="modal" onClick={(e) => e.stopPropagation()}>
-        <div className="modal-header">Ve sloupci: {taskInColumn?.title}</div>
-        <button onClick={onClose}>X</button>
-        <h1>{task.title}</h1>
+        <div className="modal-header">
+          <span>Ve sloupci: {taskInColumn?.title}</span>
+          <button className="modal-close" onClick={onClose}>
+            ✕
+          </button>
+        </div>
+
+        <h2 className="modal-title">{task.title}</h2>
+
         <div className="modal-body">
-          <p>PRIORITA</p>
-          <button
-            style={{ opacity: taskLabel && taskLabel !== "high" ? 0.3 : 1 }}
-            onClick={() =>
-              dispatch({
-                type: "UPDATE_LABEL",
-                payload: {
-                  taskId: currentTask.id,
-                  label: taskLabel === "high" ? "" : "high",
-                },
-              })
-            }
-          >
-            Vysoka
-          </button>
-          <button
-            style={{ opacity: taskLabel && taskLabel !== "medium" ? 0.3 : 1 }}
-            onClick={() =>
-              dispatch({
-                type: "UPDATE_LABEL",
-                payload: {
-                  taskId: currentTask.id,
-                  label: taskLabel === "medium" ? "" : "medium",
-                },
-              })
-            }
-          >
-            Normalni
-          </button>
-          <button
-            style={{ opacity: taskLabel && taskLabel !== "low" ? 0.3 : 1 }}
-            onClick={() =>
-              dispatch({
-                type: "UPDATE_LABEL",
-                payload: {
-                  taskId: currentTask.id,
-                  label: taskLabel === "low" ? "" : "low",
-                },
-              })
-            }
-          >
-            Nizka
-          </button>
-          <p>Termin</p>
-          <input
-            type="date"
-            value={deadline.from}
-            max={deadline.to}
-            onChange={(e) => {
-              const newDeadline = { ...deadline, from: e.target.value };
-              setDeadline(newDeadline);
-              dispatch({
-                type: "UPDATE_DEADLINE",
-                payload: {
-                  taskId: currentTask.id,
-                  from: newDeadline.from,
-                  to: newDeadline.to,
-                },
-              });
-            }}
-          />
-          <input
-            type="date"
-            value={deadline.to}
-            min={deadline.from}
-            onChange={(e) => {
-              const newDeadline = { ...deadline, to: e.target.value };
-              setDeadline(newDeadline);
-              dispatch({
-                type: "UPDATE_DEADLINE",
-                payload: {
-                  taskId: currentTask.id,
-                  from: newDeadline.from,
-                  to: newDeadline.to,
-                },
-              });
-            }}
-          />
-          {deadlineStatus && (
-            <span
-              style={{
-                color:
-                  deadlineStatus === "overdue"
-                    ? "#ff6b6b"
-                    : deadlineStatus === "today"
-                      ? "#f5a623"
-                      : deadlineStatus === "done"
-                        ? "#4ecdc4"
-                        : deadlineStatus === "inprogress"
-                          ? "#4ecdc4"
-                          : "#888",
-              }}
-            >
-              {deadlineStatus === "overdue"
-                ? "Po splatnosti"
-                : deadlineStatus === "today"
-                  ? "Dnes končí"
-                  : deadlineStatus === "done"
-                    ? "Splněno"
-                    : deadlineStatus === "inprogress"
-                      ? "Probíhá"
-                      : "Naplánováno"}
-            </span>
-          )}
-          <input
-            type="checkbox"
-            checked={currentTask.done}
-            onChange={() => {
-              dispatch({
-                type: "TOGGLE_DONE",
-                payload: { taskId: currentTask.id },
-              });
-            }}
-          />{" "}
-          <p>splneno</p>
-          {changeDesc ? (
-            <>
-              <textarea
-                name=""
-                id=""
-                value={taskDesc}
-                onChange={(e) => setTaskDesc(e.target.value)}
-              ></textarea>
+          {/* PRIORITA */}
+          <div className="modal-section">
+            <p className="modal-section-label">Priorita</p>
+            <div className="label-buttons">
               <button
-                onClick={() => {
+                className={`label-btn high ${taskLabel === "high" ? "active" : ""}`}
+                style={{ opacity: taskLabel && taskLabel !== "high" ? 0.3 : 1 }}
+                onClick={() =>
                   dispatch({
-                    type: "UPDATE_DESCRIPTION",
-                    payload: { taskId: task.id, desc: taskDesc },
-                  });
-                  setChangeDesc(false);
-                }}
+                    type: "UPDATE_LABEL",
+                    payload: {
+                      taskId: currentTask.id,
+                      label: taskLabel === "high" ? "" : "high",
+                    },
+                  })
+                }
               >
-                Ulozit popisek
+                Vysoká
               </button>
               <button
-                onClick={() => {
-                  setTaskDesc(currentTask?.desc || "");
-                  setChangeDesc(false);
+                className={`label-btn medium ${taskLabel === "medium" ? "active" : ""}`}
+                style={{
+                  opacity: taskLabel && taskLabel !== "medium" ? 0.3 : 1,
                 }}
+                onClick={() =>
+                  dispatch({
+                    type: "UPDATE_LABEL",
+                    payload: {
+                      taskId: currentTask.id,
+                      label: taskLabel === "medium" ? "" : "medium",
+                    },
+                  })
+                }
               >
-                X
+                Normální
               </button>
-            </>
-          ) : (
-            <>
-              <p>{taskDesc}</p>
-              <button onClick={() => setChangeDesc(true)}>
-                Upravit popisek
+              <button
+                className={`label-btn low ${taskLabel === "low" ? "active" : ""}`}
+                style={{ opacity: taskLabel && taskLabel !== "low" ? 0.3 : 1 }}
+                onClick={() =>
+                  dispatch({
+                    type: "UPDATE_LABEL",
+                    payload: {
+                      taskId: currentTask.id,
+                      label: taskLabel === "low" ? "" : "low",
+                    },
+                  })
+                }
+              >
+                Nízká
               </button>
-            </>
-          )}
+            </div>
+          </div>
+
+          {/* TERMÍN */}
+          <div className="modal-section">
+            <p className="modal-section-label">Termín</p>
+            <div className="deadline-inputs">
+              <input
+                className="deadline-input"
+                type="date"
+                value={deadline.from}
+                max={deadline.to}
+                onChange={(e) => {
+                  const newDeadline = { ...deadline, from: e.target.value };
+                  setDeadline(newDeadline);
+                  dispatch({
+                    type: "UPDATE_DEADLINE",
+                    payload: {
+                      taskId: currentTask.id,
+                      from: newDeadline.from,
+                      to: newDeadline.to,
+                    },
+                  });
+                }}
+              />
+              <input
+                className="deadline-input"
+                type="date"
+                value={deadline.to}
+                min={deadline.from}
+                onChange={(e) => {
+                  const newDeadline = { ...deadline, to: e.target.value };
+                  setDeadline(newDeadline);
+                  dispatch({
+                    type: "UPDATE_DEADLINE",
+                    payload: {
+                      taskId: currentTask.id,
+                      from: newDeadline.from,
+                      to: newDeadline.to,
+                    },
+                  });
+                }}
+              />
+              
+            </div>
+          </div>
+
+          {/* SPLNĚNO */}
+          <div className="modal-section">
+            <label className="done-row">
+              <input
+                type="checkbox"
+                checked={currentTask.done}
+                onChange={() =>
+                  dispatch({
+                    type: "TOGGLE_DONE",
+                    payload: { taskId: currentTask.id },
+                  })
+                }
+              />
+              <p>
+                {deadlineStatus && (
+                  <span className={`deadline-badge ${deadlineStatus}`}>
+                    {deadlineStatus === "overdue"
+                      ? "Po splatnosti"
+                      : deadlineStatus === "today"
+                        ? "Dnes končí"
+                        : deadlineStatus === "done"
+                          ? "Splněno"
+                          : deadlineStatus === "inprogress"
+                            ? "Probíhá"
+                            : "Naplánováno"}
+                  </span>
+                )}
+              </p>
+            </label>
+          </div>
+
+          {/* POPIS */}
+          <div className="modal-section">
+            <p className="modal-section-label">Popis</p>
+            {changeDesc ? (
+              <>
+                <textarea
+                  className="modal-textarea"
+                  value={taskDesc}
+                  onChange={(e) => setTaskDesc(e.target.value)}
+                />
+                <div className="modal-desc-actions">
+                  <button
+                    className="btn-save"
+                    onClick={() => {
+                      dispatch({
+                        type: "UPDATE_DESCRIPTION",
+                        payload: { taskId: task.id, desc: taskDesc },
+                      });
+                      setChangeDesc(false);
+                    }}
+                  >
+                    Uložit
+                  </button>
+                  <button
+                    className="btn-cancel"
+                    onClick={() => {
+                      setTaskDesc(currentTask?.desc || "");
+                      setChangeDesc(false);
+                    }}
+                  >
+                    Zrušit
+                  </button>
+                </div>
+              </>
+            ) : (
+              <p className="modal-desc" onClick={() => setChangeDesc(true)}>
+                {taskDesc || "Klikni pro přidání popisu..."}
+              </p>
+            )}
+          </div>
         </div>
       </div>
     </div>
