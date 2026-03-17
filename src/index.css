@@ -1,4 +1,6 @@
-/* ===== GLOBAL ===== */
+/* ================================================
+   GLOBÁLNÍ RESET A ZÁKLADNÍ STYLY
+   ================================================ */
 
 * {
   margin: 0;
@@ -13,7 +15,9 @@ body {
   min-height: 100vh;
 }
 
-/* ===== NAVBAR ===== */
+/* ================================================
+   NAVIGAČNÍ LIŠTA
+   ================================================ */
 
 .navbar {
   background: #16161d;
@@ -56,13 +60,17 @@ body {
   color: #fff;
 }
 
-/* ===== MAIN CONTENT ===== */
+/* ================================================
+   HLAVNÍ OBSAH
+   ================================================ */
 
 .main-content {
   padding: 28px;
 }
 
-/* ===== BOARDS PAGE ===== */
+/* ================================================
+   STRÁNKA NÁSTĚNEK
+   ================================================ */
 
 .boards-page-title {
   font-size: 26px;
@@ -81,10 +89,8 @@ body {
   background: #16161d;
   border: 1px solid #2a2a35;
   color: #fff;
-
   padding: 10px 14px;
   border-radius: 8px;
-
   font-size: 14px;
 }
 
@@ -93,40 +99,9 @@ body {
   border-color: #4ecdc4;
 }
 
-/* ===== BUTTONS ===== */
-
-.btn-add {
-  background: #4ecdc4;
-  border: none;
-  border-radius: 8px;
-
-  padding: 10px 16px;
-  font-weight: 600;
-  font-size: 13px;
-
-  color: #0f0f13;
-  cursor: pointer;
-}
-
-.btn-add:hover {
-  opacity: 0.9;
-}
-
-.btn-delete {
-  background: transparent;
-  border: none;
-  color: #888;
-  cursor: pointer;
-  font-size: 12px;
-  width: fit-content;
-  align-self: flex-end;
-}
-
-.btn-delete:hover {
-  color: #ff6b6b;
-}
-
-/* ===== BOARDS GRID ===== */
+/* ================================================
+   MŘÍŽKA NÁSTĚNEK
+   ================================================ */
 
 .boards-grid {
   display: grid;
@@ -134,18 +109,17 @@ body {
   gap: 16px;
 }
 
-/* ===== BOARD CARD ===== */
+/* ================================================
+   KARTA NÁSTĚNKY
+   ================================================ */
 
 .board-card {
   background: #16161d;
   border: 1px solid #2a2a35;
-
   border-radius: 14px;
   padding: 20px;
-
   cursor: pointer;
   transition: 0.15s;
-
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -172,7 +146,9 @@ body {
   color: #888;
 }
 
-/* ===== BOARD PAGE ===== */
+/* ================================================
+   STRÁNKA NÁSTĚNKY
+   ================================================ */
 
 .board-page-title {
   font-size: 22px;
@@ -180,7 +156,9 @@ body {
   margin-bottom: 24px;
 }
 
-/* ===== COLUMNS ===== */
+/* ================================================
+   SLOUPCE – KONTEJNER
+   ================================================ */
 
 .columns {
   display: flex;
@@ -190,15 +168,15 @@ body {
   padding-bottom: 10px;
 }
 
-/* ===== COLUMN ===== */
+/* ================================================
+   SLOUPEC
+   ================================================ */
 
 .column {
   background: #16161d;
   border: 1px solid #2a2a35;
-
   border-radius: 14px;
   padding: 16px;
-
   min-width: 280px;
   flex: 0 0 280px;
 }
@@ -209,7 +187,96 @@ body {
   margin-bottom: 14px;
 }
 
-/* ===== TASKS ===== */
+/* ---- Hlavička sloupce ---- */
+
+.column-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  position: relative;
+}
+
+.column-menu-btn {
+  background: transparent;
+  border: none;
+  color: #888;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  letter-spacing: 2px;
+  flex-shrink: 0;
+}
+
+.column-menu-btn:hover {
+  background: #2a2a35;
+  color: #fff;
+}
+
+/* ---- Přejmenování sloupce ---- */
+
+.column-rename {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+}
+
+.column-rename-input {
+  background: #0f0f13;
+  border: 1px solid #4ecdc4;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  flex: 1;
+}
+
+.column-rename-input:focus {
+  outline: none;
+}
+
+/* ---- Přidat nový sloupec ---- */
+
+.column-add-new {
+  min-width: 280px;
+  flex: 0 0 280px;
+  align-self: flex-start;
+}
+
+.column-add-new-form {
+  background: #16161d;
+  border: 1px solid #2a2a35;
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.column-add-new-input {
+  background: #0f0f13;
+  border: 1px solid #2a2a35;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+.column-add-new-input:focus {
+  outline: none;
+  border-color: #4ecdc4;
+}
+
+.column-add-new-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* ================================================
+   ÚKOLY – SEZNAM
+   ================================================ */
 
 .column-tasks {
   min-height: 50px;
@@ -220,20 +287,21 @@ body {
   overflow-y: auto;
 }
 
-/* ===== TASK CARD ===== */
+/* ================================================
+   KARTA ÚKOLU
+   ================================================ */
 
 .task {
   background: #0f0f13;
   border: 1px solid #2a2a35;
-
   border-radius: 10px;
   padding: 14px;
-
   transition: 0.15s;
-
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .task:hover {
@@ -243,9 +311,31 @@ body {
 .task-title {
   font-size: 13px;
   font-weight: 500;
+  flex: 1;
 }
 
-/* ===== ADD TASK AREA ===== */
+/* ---- Štítek priority na kartě úkolu ---- */
+
+.task-label {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.task-label.high {
+  background: #ff6b6b;
+}
+
+.task-label.medium {
+  background: #f5a623;
+}
+
+.task-label.low {
+  background: #4ecdc4;
+}
+
+/* ---- Přidat úkol ---- */
 
 .column-add {
   margin-top: 12px;
@@ -258,7 +348,6 @@ body {
   background: #0f0f13;
   border: 1px solid #2a2a35;
   color: #fff;
-
   padding: 8px 10px;
   border-radius: 8px;
 }
@@ -268,254 +357,37 @@ body {
   border-color: #4ecdc4;
 }
 
-@media (max-width: 768px) {
-  .columns {
-    flex-wrap: wrap;
-  }
+/* ================================================
+   TLAČÍTKA
+   ================================================ */
 
-  .column {
-    flex: 1 1 100%;
-    min-width: unset;
-  }
-}
-
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 100;
-}
-
-.modal {
-  background: #16161d;
-  border: 1px solid #2a2a35;
-  border-radius: 14px;
-  width: 100%;
-  max-width: 560px;
-  max-height: 90vh;
-  overflow-y: auto;
-  color: #e8e8f0;
-}
-
-.modal-body {
-  padding: 20px;
-}
-
-.modal-footer {
-  border-top: 1px solid #2a2a35;
-  padding: 16px 20px;
-}
-/* ===== MODAL HEADER ===== */
-
-.modal-header {
-  padding: 16px 20px 0 20px;
-  font-size: 12px;
-  color: #4ecdc4;
+.btn-add {
+  background: #4ecdc4;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
   font-weight: 600;
-  letter-spacing: 0.5px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  font-size: 13px;
+  color: #0f0f13;
+  cursor: pointer;
 }
 
-.modal-title {
-  font-size: 22px;
-  font-weight: 700;
-  padding: 10px 20px 0 20px;
+.btn-add:hover {
+  opacity: 0.9;
 }
 
-.modal-close {
+.btn-delete {
   background: transparent;
   border: none;
   color: #888;
-  font-size: 18px;
   cursor: pointer;
-  padding: 4px 8px;
-  border-radius: 6px;
-  line-height: 1;
-}
-
-.modal-close:hover {
-  color: #fff;
-  background: #2a2a35;
-}
-
-/* ===== MODAL SECTIONS ===== */
-
-.modal-section {
-  margin-bottom: 20px;
-}
-
-.modal-section-label {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  color: #888;
-  text-transform: uppercase;
-  margin-bottom: 10px;
-}
-
-/* ===== PRIORITY LABELS ===== */
-
-.label-buttons {
-  display: flex;
-  gap: 8px;
-}
-
-.label-btn {
-  border: none;
-  border-radius: 20px;
-  padding: 5px 14px;
   font-size: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.15s;
+  width: fit-content;
+  align-self: flex-end;
 }
 
-.label-btn.high {
-  background: #ff6b6b22;
+.btn-delete:hover {
   color: #ff6b6b;
-  border: 1px solid #ff6b6b55;
-}
-.label-btn.medium {
-  background: #f5a62322;
-  color: #f5a623;
-  border: 1px solid #f5a62355;
-}
-.label-btn.low {
-  background: #4ecdc422;
-  color: #4ecdc4;
-  border: 1px solid #4ecdc455;
-}
-
-.label-btn.high.active {
-  background: #ff6b6b;
-  color: #fff;
-}
-.label-btn.medium.active {
-  background: #f5a623;
-  color: #fff;
-}
-.label-btn.low.active {
-  background: #4ecdc4;
-  color: #0f0f13;
-}
-
-/* ===== DEADLINE ===== */
-
-.deadline-inputs {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.deadline-input {
-  background: #0f0f13;
-  border: 1px solid #2a2a35;
-  color: #e8e8f0;
-  padding: 8px 12px;
-  border-radius: 8px;
-  font-size: 13px;
-  cursor: pointer;
-}
-
-.deadline-input:focus {
-  outline: none;
-  border-color: #4ecdc4;
-}
-
-.deadline-badge {
-  font-size: 12px;
-  font-weight: 600;
-  padding: 4px 10px;
-  border-radius: 20px;
-}
-
-.deadline-badge.overdue {
-  background: #ff6b6b22;
-  color: #ff6b6b;
-}
-.deadline-badge.today {
-  background: #f5a62322;
-  color: #f5a623;
-}
-.deadline-badge.done {
-  background: #4ecdc422;
-  color: #4ecdc4;
-}
-.deadline-badge.inprogress {
-  background: #4ecdc422;
-  color: #4ecdc4;
-}
-.deadline-badge.planned {
-  background: #88888822;
-  color: #888;
-}
-
-/* ===== DONE CHECKBOX ===== */
-
-.done-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  cursor: pointer;
-}
-
-.done-row input[type="checkbox"] {
-  width: 16px;
-  height: 16px;
-  accent-color: #4ecdc4;
-  cursor: pointer;
-}
-
-.done-row p {
-  font-size: 13px;
-  color: #888;
-}
-
-/* ===== DESCRIPTION ===== */
-
-.modal-desc {
-  font-size: 13px;
-  color: #aaa;
-  line-height: 1.6;
-  min-height: 20px;
-  cursor: pointer;
-}
-
-.modal-desc:hover {
-  color: #e8e8f0;
-}
-
-.modal-textarea {
-  width: 100%;
-  background: #0f0f13;
-  border: 1px solid #2a2a35;
-  color: #e8e8f0;
-  padding: 10px 12px;
-  border-radius: 8px;
-  font-size: 13px;
-  resize: vertical;
-  min-height: 80px;
-  font-family: inherit;
-}
-
-.modal-textarea:focus {
-  outline: none;
-  border-color: #4ecdc4;
-}
-
-.modal-desc-actions {
-  display: flex;
-  gap: 8px;
-  margin-top: 8px;
 }
 
 .btn-save {
@@ -543,34 +415,29 @@ body {
   color: #fff;
   border-color: #888;
 }
-/* ===== COLUMN HEADER ===== */
 
-.column-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 14px;
-  position: relative;
-}
-
-.column-menu-btn {
-  background: transparent;
-  border: none;
+.btn-add-column {
+  background: #ffffff15;
+  border: 1px dashed #2a2a35;
   color: #888;
-  font-size: 16px;
+  border-radius: 14px;
+  padding: 14px 20px;
+  font-size: 13px;
   cursor: pointer;
-  padding: 4px 8px;
-  border-radius: 6px;
-  letter-spacing: 2px;
-  flex-shrink: 0;
+  width: 100%;
+  text-align: left;
+  transition: 0.15s;
 }
 
-.column-menu-btn:hover {
-  background: #2a2a35;
+.btn-add-column:hover {
+  background: #ffffff22;
   color: #fff;
+  border-color: #4ecdc4;
 }
 
-/* ===== DROPDOWN ===== */
+/* ================================================
+   DROPDOWN MENU
+   ================================================ */
 
 .dropdown {
   position: absolute;
@@ -610,81 +477,328 @@ body {
   background: #ff6b6b22;
 }
 
-/* ===== COLUMN RENAME ===== */
+/* ================================================
+   MODAL – OVERLAY A ZÁKLADNÍ STRUKTURA
+   ================================================ */
 
-.column-rename {
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
   display: flex;
   align-items: center;
-  gap: 6px;
-  flex: 1;
+  justify-content: center;
+  z-index: 100;
 }
 
-.column-rename-input {
-  background: #0f0f13;
-  border: 1px solid #4ecdc4;
-  color: #fff;
-  padding: 5px 10px;
-  border-radius: 6px;
-  font-size: 13px;
-  flex: 1;
-}
-
-.column-rename-input:focus {
-  outline: none;
-}
-
-/* ===== ADD NEW COLUMN ===== */
-
-.column-add-new {
-  min-width: 280px;
-  flex: 0 0 280px;
-  align-self: flex-start;
-}
-
-.column-add-new-form {
+.modal {
   background: #16161d;
   border: 1px solid #2a2a35;
   border-radius: 14px;
-  padding: 16px;
+  width: 100%;
+  max-width: 560px;
+  max-height: 90vh;
+  overflow-y: auto;
+  color: #e8e8f0;
+}
+
+.modal-header {
+  padding: 16px 20px 0 20px;
+  font-size: 12px;
+  color: #4ecdc4;
+  font-weight: 600;
+  letter-spacing: 0.5px;
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-title {
+  font-size: 22px;
+  font-weight: 700;
+  padding: 10px 20px 0 20px;
+}
+
+.modal-close {
+  background: transparent;
+  border: none;
+  color: #888;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  line-height: 1;
+}
+
+.modal-close:hover {
+  color: #fff;
+  background: #2a2a35;
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+.modal-footer {
+  border-top: 1px solid #2a2a35;
+  padding: 16px 20px;
+}
+
+/* ================================================
+   MODAL – SEKCE
+   ================================================ */
+
+.modal-section {
+  margin-bottom: 20px;
+}
+
+.modal-section-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #888;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+/* ================================================
+   MODAL – PRIORITA (ŠTÍTKY)
+   ================================================ */
+
+.label-buttons {
+  display: flex;
   gap: 8px;
 }
 
-.column-add-new-input {
+.label-btn {
+  border: none;
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.15s;
+}
+
+.label-btn.high {
+  background: #ff6b6b22;
+  color: #ff6b6b;
+  border: 1px solid #ff6b6b55;
+}
+
+.label-btn.medium {
+  background: #f5a62322;
+  color: #f5a623;
+  border: 1px solid #f5a62355;
+}
+
+.label-btn.low {
+  background: #4ecdc422;
+  color: #4ecdc4;
+  border: 1px solid #4ecdc455;
+}
+
+.label-btn.high.active {
+  background: #ff6b6b;
+  color: #fff;
+}
+
+.label-btn.medium.active {
+  background: #f5a623;
+  color: #fff;
+}
+
+.label-btn.low.active {
+  background: #4ecdc4;
+  color: #0f0f13;
+}
+
+/* ================================================
+   MODAL – TERMÍN
+   ================================================ */
+
+.deadline-inputs {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.deadline-input {
   background: #0f0f13;
   border: 1px solid #2a2a35;
-  color: #fff;
+  color: #e8e8f0;
   padding: 8px 12px;
   border-radius: 8px;
   font-size: 13px;
+  cursor: pointer;
 }
 
-.column-add-new-input:focus {
+.deadline-input:focus {
   outline: none;
   border-color: #4ecdc4;
 }
 
-.column-add-new-actions {
+/* ---- Stav termínu (badge) ---- */
+
+.deadline-badge {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+.deadline-badge.overdue {
+  background: #ff6b6b22;
+  color: #ff6b6b;
+}
+
+.deadline-badge.today {
+  background: #f5a62322;
+  color: #f5a623;
+}
+
+.deadline-badge.done {
+  background: #4ecdc422;
+  color: #4ecdc4;
+}
+
+.deadline-badge.inprogress {
+  background: #4ecdc422;
+  color: #4ecdc4;
+}
+
+.deadline-badge.planned {
+  background: #88888822;
+  color: #888;
+}
+
+/* ================================================
+   MODAL – SPLNĚNO (ZAŠKRTÁVACÍ POLE)
+   ================================================ */
+
+.done-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.done-row input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: #4ecdc4;
+  cursor: pointer;
+}
+
+.done-row p {
+  font-size: 13px;
+  color: #888;
+}
+
+/* ================================================
+   MODAL – POPIS
+   ================================================ */
+
+.modal-desc {
+  font-size: 13px;
+  color: #aaa;
+  line-height: 1.6;
+  min-height: 20px;
+  cursor: pointer;
+}
+
+.modal-desc:hover {
+  color: #e8e8f0;
+}
+
+.modal-textarea {
+  width: 100%;
+  background: #0f0f13;
+  border: 1px solid #2a2a35;
+  color: #e8e8f0;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  resize: vertical;
+  min-height: 80px;
+  font-family: inherit;
+}
+
+.modal-textarea:focus {
+  outline: none;
+  border-color: #4ecdc4;
+}
+
+.modal-desc-actions {
   display: flex;
   gap: 8px;
+  margin-top: 8px;
 }
 
-.btn-add-column {
-  background: #ffffff15;
-  border: 1px dashed #2a2a35;
-  color: #888;
-  border-radius: 14px;
-  padding: 14px 20px;
+/* ================================================
+   MODAL – KOMENTÁŘE
+   ================================================ */
+
+/* ---- Přidat komentář ---- */
+
+.comment-add {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+/* ---- Seznam komentářů ---- */
+
+.modal-comments {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ---- Jednotlivý komentář ---- */
+
+.comment-item {
+  background: #0f0f13;
+  border: 1px solid #2a2a35;
+  border-radius: 8px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.comment-text {
   font-size: 13px;
-  cursor: pointer;
-  width: 100%;
-  text-align: left;
-  transition: 0.15s;
+  color: #e8e8f0;
+  line-height: 1.5;
 }
 
-.btn-add-column:hover {
-  background: #ffffff22;
-  color: #fff;
-  border-color: #4ecdc4;
+.comment-meta {
+  font-size: 11px;
+  color: #555;
+}
+
+.comment-actions {
+  display: flex;
+  gap: 6px;
+}
+
+/* ================================================
+   RESPONZIVNÍ DESIGN
+   ================================================ */
+
+@media (max-width: 768px) {
+  .columns {
+    flex-wrap: wrap;
+  }
+
+  .column {
+    flex: 1 1 100%;
+    min-width: unset;
+  }
 }

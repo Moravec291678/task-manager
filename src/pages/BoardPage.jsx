@@ -62,7 +62,10 @@ function BoardPage() {
                         onClick={() => {
                           dispatch({
                             type: "RENAME_COLUMN",
-                            payload: { columnId: c.id, title: renameColumnValue },
+                            payload: {
+                              columnId: c.id,
+                              title: renameColumnValue,
+                            },
                           });
                           setRenamingColumnId(null);
                         }}
@@ -137,11 +140,17 @@ function BoardPage() {
                               ref={provided.innerRef}
                             >
                               <p className="task-title">{t.title}</p>
+                              {t.label && (
+                                <div className={`task-label ${t.label}`} />
+                              )}
                               <button
                                 className="btn-delete"
                                 onClick={(e) => {
                                   e.stopPropagation();
-                                  dispatch({ type: "DELETE_TASK", payload: t.id });
+                                  dispatch({
+                                    type: "DELETE_TASK",
+                                    payload: t.id,
+                                  });
                                 }}
                               >
                                 Smazat
