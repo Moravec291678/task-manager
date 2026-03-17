@@ -27,9 +27,11 @@ function TaskModal({ task, onClose }) {
         ? "overdue"
         : toDate && toDate.toDateString() === today.toDateString()
           ? "today"
-          : fromDate && fromDate > today
-            ? "planned"
-            : "inprogress";
+          : fromDate && fromDate.toDateString() === today.toDateString()
+            ? "inprogress"
+            : fromDate && fromDate > today
+              ? "planned"
+              : "inprogress";
 
   const [commentText, setCommentText] = useState("");
   const [editingCommentId, setEditingCommentId] = useState(null);
@@ -252,10 +254,7 @@ function TaskModal({ task, onClose }) {
 
             {/* Seznam komentářů */}
             <div className="modal-comments">
-              
-              {
-              currentTask.comments?.map((c) =>
-                
+              {currentTask.comments?.map((c) =>
                 editingCommentId === c.id ? (
                   // Editace komentáře
                   <div key={c.id} className="comment-item">

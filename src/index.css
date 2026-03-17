@@ -308,6 +308,7 @@ body {
 }
 
 .task:hover {
+  cursor: pointer;
   border-color: #3a3a45;
 }
 
@@ -632,13 +633,18 @@ body {
 }
 
 .deadline-input {
-  background: #0f0f13;
+  background: #110f0f;
   border: 1px solid #2a2a35;
   color: #e8e8f0;
   padding: 8px 12px;
   border-radius: 8px;
   font-size: 13px;
   cursor: pointer;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  background-color: rgb(207, 161, 161);
+  border-radius: 50%;
 }
 
 .deadline-input:focus {
