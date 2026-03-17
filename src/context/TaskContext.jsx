@@ -116,6 +116,59 @@ function reducer(state, action) {
             : t;
         }),
       };
+    case "ADD_COMMENT":
+      return {
+        ...state,
+        tasks: state.tasks.map((t) => {
+          return t.id === action.payload.taskId
+            ? {
+                ...t,
+                comments: [
+                  ...t.comments,
+                  {
+                    id: Date.now(),
+                    text: action.payload.text,
+                    date: Date.now(),
+                  },
+                ],
+              }
+            : t;
+        }),
+      };
+    case "DELETE_COMMENT":
+      return {
+        ...state,
+        tasks: state.tasks.map((t) => {
+          return t.id === action.payload.taskId
+            ? {
+                ...t,
+                comments: t.comments.filter(
+                  (c) => c.id !== action.payload.commentId,
+                ),
+              }
+            : t;
+        }),
+      };
+    case "EDIT_COMMENT":
+      return {
+        ...state,
+        tasks: state.tasks.map((t) => {
+          return t.id === action.payload.taskId
+            ? {
+                ...t,
+                comments: t.comments.map((c) => {
+                  return c.id === action.payload.commentId
+                    ? {
+                        ...c,
+                        text: action.payload.newText,
+                        date: Date.now(),
+                      }
+                    : c;
+                }),
+              }
+            : t;
+        }),
+      };
     case "ADD_COLUMN":
       return {
         ...state,

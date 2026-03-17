@@ -19,7 +19,6 @@ function TaskModal({ task, onClose }) {
   const fromDate = deadline.from ? new Date(deadline.from) : null;
   const toDate = deadline.to ? new Date(deadline.to) : null;
   const isDone = currentTask.done;
-
   const deadlineStatus = isDone
     ? "done"
     : !fromDate && !toDate
@@ -32,6 +31,9 @@ function TaskModal({ task, onClose }) {
             ? "planned"
             : "inprogress";
 
+  const [commentText, setCommentText] = useState("");
+  const [editingCommentId, setEditingCommentId] = useState(null);
+  const [editingCommentText, setEditingCommentText] = useState("");
   useEffect(() => {
     setTaskDesc(currentTask?.desc || "");
   }, [task]);
@@ -144,7 +146,6 @@ function TaskModal({ task, onClose }) {
                   });
                 }}
               />
-              
             </div>
           </div>
 
@@ -218,6 +219,75 @@ function TaskModal({ task, onClose }) {
                 {taskDesc || "Klikni pro přidání popisu..."}
               </p>
             )}
+          </div>
+          <div className="modal-section">
+            <p className="modal-section-label">Komentare</p>
+            <textarea
+              value={commentText}
+              onChange={(e) => setCommentText(e.target.value)}
+            />
+            <button
+              onClick={() => {
+                setCommentText("");
+                dispatch({
+                  type: "ADD_COMMENT",
+                  payload: { taskId: currentTask.id, text: commentText },
+                });
+              }}
+            >
+              Odeslat
+            </button>
+            {currentTask.comments.map((c) => {
+              return editingCommentId === c.id ? (
+                <div key={c.id}>
+                  <textarea
+                    value={editingCommentText}
+                    onChange={(e) => setEditingCommentText(e.target.value)}
+                  ></textarea>
+                  <button
+                    onClick={() => {
+                      dispatch({
+                        type: "EDIT_COMMENT",
+                        payload: {
+                          taskId: currentTask.id,
+                          commentId: c.id,
+                          newText: editingCommentText,
+                        },
+                      });
+                      setEditingCommentId(null);
+                      setEditingCommentText("");
+                    }}
+                  >
+                    Ulozit
+                  </button>
+                  <button onClick={() => setEditingCommentId(null)}>X</button>
+                </div>
+              ) : (
+                <div key={c.id}>
+                  {" "}
+                  <p>{c.text}</p>
+                  <p>{new Date(c.date).toLocaleDateString()}</p>
+                  <button
+                    onClick={() =>
+                      dispatch({
+                        type: "DELETE_COMMENT",
+                        payload: { commentId: c.id, taskId: currentTask.id },
+                      })
+                    }
+                  >
+                    Smazat
+                  </button>
+                  <button
+                    onClick={() => {
+                      setEditingCommentId(c.id);
+                      setEditingCommentText(c.text);
+                    }}
+                  >
+                    Upravit
+                  </button>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
