@@ -207,9 +207,9 @@ function reducer(state, action) {
           ...state.boards,
           {
             id: newBoardId,
-            icon: "💼",
+            icon: action.payload.emoji,
             lastOpened: new Date().toLocaleDateString(),
-            title: action.payload,
+            title: action.payload.title,
           },
         ],
         columns: [
