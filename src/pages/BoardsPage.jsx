@@ -25,7 +25,7 @@ function BoardsPage() {
                 </button>
               );
             })}
-            <button className="btn-back-emojis" onClick={() => setEmojisOpened(false)}>zpet</button>
+            <button className="btn-cancel" onClick={() => setEmojisOpened(false)}>← Zpět</button>
           </div>
         ) : (
           <button

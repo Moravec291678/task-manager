@@ -12,18 +12,18 @@ function BoardCard({ board, onDelete }) {
           <span className="board-card-icon">{board.icon}</span>
           <h2 className="board-card-title">{board.title}</h2>
         </div>
-        <p className="board-card-date">{board.lastOpened}</p>
       </div>
-      <button
-        className="btn-delete"
-        onClick={() => {
-          if (window.confirm("Opravdu smazat?")) {
-            return onDelete();
-          }
-        }}
-      >
-        Smazat
-      </button>
+      <div className="board-card-footer">
+        <p className="board-card-date">{board.lastOpened}</p>
+        <button
+          className="btn-delete"
+          onClick={() => {
+            if (window.confirm("Opravdu smazat?")) return onDelete();
+          }}
+        >
+          Smazat
+        </button>
+      </div>
     </div>
   );
 }

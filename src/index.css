@@ -151,11 +151,21 @@ body {
   font-size: 15px;
   font-weight: 600;
   margin-bottom: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .board-card-date {
   font-size: 12px;
   color: #888;
+}
+
+.board-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
 }
 
 /* ================================================
@@ -330,6 +340,9 @@ body {
   font-size: 16px;
   font-weight: 500;
   flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 /* ---- Štítek priority na kartě úkolu ---- */
@@ -935,6 +948,15 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 @media (max-width: 768px) {
   .columns {
     flex-wrap: wrap;
+  }
+  .boards-grid {
+    grid-template-columns: 1fr;
+  }
+  .main-content {
+    padding: 16px;
+  }
+  .boards-add {
+    max-width: 100%;
   }
 
   .column {
