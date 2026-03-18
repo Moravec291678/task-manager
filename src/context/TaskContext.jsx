@@ -64,6 +64,15 @@ function reducer(state, action) {
         ...state,
         tasks: state.tasks.filter((t) => t.id !== action.payload),
       };
+    case "RENAME_TASK":
+      return {
+        ...state,
+        tasks: state.tasks.map((t) => {
+          return t.id === action.payload.taskId
+            ? { ...t, title: action.payload.newTitle }
+            : t;
+        }),
+      };
     case "UPDATE_DESCRIPTION":
       return {
         ...state,

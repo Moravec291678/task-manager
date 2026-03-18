@@ -8,8 +8,10 @@ function BoardCard({ board, onDelete }) {
         className="board-card-content"
         onClick={() => navigate(`/board/${board.id}`)}
       >
-        <span className="board-card-icon">{board.icon}</span>
-        <h2 className="board-card-title">{board.title}</h2>
+        <div className="board-wrapper">
+          <span className="board-card-icon">{board.icon}</span>
+          <h2 className="board-card-title">{board.title}</h2>
+        </div>
         <p className="board-card-date">{board.lastOpened}</p>
       </div>
       <button

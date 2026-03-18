@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useTask } from "../context/TaskContext";
 
 function TaskModal({ task, onClose }) {
-  const [taskDesc, setTaskDesc] = useState();
+  const [taskDesc, setTaskDesc] = useState("");
 
   const { dispatch, state } = useTask();
   const currentTask = state.tasks.find((t) => t.id === task.id);
@@ -36,8 +36,13 @@ function TaskModal({ task, onClose }) {
   const [commentText, setCommentText] = useState("");
   const [editingCommentId, setEditingCommentId] = useState(null);
   const [editingCommentText, setEditingCommentText] = useState("");
+  const [changeTitle, setChangeTitle] = useState(false);
+  const [taskTitle, setTaskTitle] = useState("");
   useEffect(() => {
     setTaskDesc(currentTask?.desc || "");
+  }, [currentTask]);
+  useEffect(() => {
+    setTaskTitle(currentTask?.title || "");
   }, [currentTask]);
   if (!task) return null;
 
@@ -51,8 +56,37 @@ function TaskModal({ task, onClose }) {
             ✕
           </button>
         </div>
-
-        <h2 className="modal-title">{task.title}</h2>
+        {changeTitle ? (
+          <div className="modal-input">
+            <input
+              className="modal-title-input"
+              value={taskTitle}
+              onChange={(e) => setTaskTitle(e.target.value)}
+            />
+            <button
+              className="btn-save"
+              onClick={() => {
+                dispatch({
+                  type: "RENAME_TASK",
+                  payload: { taskId: task.id, newTitle: taskTitle },
+                });
+                setChangeTitle(false);
+              }}
+            >
+              Uložit
+            </button>
+            <button
+              className="btn-cancel"
+              onClick={() => setChangeTitle(false)}
+            >
+              Zrušit
+            </button>
+          </div>
+        ) : (
+          <h2 onClick={() => setChangeTitle(true)} className="modal-title">
+            {currentTask.title || "Přidej název..."}{" "}
+          </h2>
+        )}
 
         <div className="modal-body">
           {/* PRIORITA */}

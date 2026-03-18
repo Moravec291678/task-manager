@@ -134,6 +134,14 @@ body {
   border-color: #4ecdc4;
 }
 
+.board-wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 5px;
+  align-items: center;
+}
+
 .board-card-icon {
   font-size: 22px;
   margin-bottom: 10px;
@@ -543,6 +551,26 @@ body {
   font-size: 22px;
   font-weight: 700;
   padding: 10px 20px 0 20px;
+}
+
+.modal-input {
+  padding: 10px 20px 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.modal-title-input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #4ecdc4;
+  color: #e8e8f0;
+  font-size: 22px;
+  font-weight: 700;
+  padding: 10px 20px;
+  width: 100%;
+  font-family: inherit;
+  outline: none;
 }
 
 .modal-close {
