@@ -1,20 +1,7 @@
 import { act, createContext, useContext, useReducer } from "react";
 import { useEffect } from "react";
 const initialState = {
-  boards: [
-    {
-      title: "Work",
-      icon: "💼",
-      lastOpened: "Pred 18 minutami",
-      id: "board1",
-    },
-    {
-      title: "School",
-      icon: "💼",
-      lastOpened: "4 dny",
-      id: "board2",
-    },
-  ],
+  boards: [],
   columns: [
     {
       title: "To Do",
