@@ -308,15 +308,17 @@ function TaskModal({ task, onClose }) {
                       </button>
                       <button
                         className="btn-delete"
-                        onClick={() =>
-                          dispatch({
-                            type: "DELETE_COMMENT",
-                            payload: {
-                              commentId: c.id,
-                              taskId: currentTask.id,
-                            },
-                          })
-                        }
+                        onClick={() => {
+                          if (window.confirm("Opravdu smazat?")) {
+                            dispatch({
+                              type: "DELETE_COMMENT",
+                              payload: {
+                                commentId: c.id,
+                                taskId: currentTask.id,
+                              },
+                            });
+                          }
+                        }}
                       >
                         Smazat
                       </button>

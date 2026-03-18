@@ -118,8 +118,10 @@ function BoardPage() {
                       <button
                         className="dropdown-item dropdown-item--danger"
                         onClick={() => {
-                          dispatch({ type: "DELETE_COLUMN", payload: c.id });
-                          setOpenMenu(null);
+                          if (window.confirm("Opravdu smazat?")) {
+                            dispatch({ type: "DELETE_COLUMN", payload: c.id });
+                            setOpenMenu(null);
+                          }
                         }}
                       >
                         Smazat
@@ -159,10 +161,12 @@ function BoardPage() {
                                   className="btn-delete"
                                   onClick={(e) => {
                                     e.stopPropagation();
-                                    dispatch({
-                                      type: "DELETE_TASK",
-                                      payload: t.id,
-                                    });
+                                    if (window.confirm("Opravdu smazat?")) {
+                                      dispatch({
+                                        type: "DELETE_TASK",
+                                        payload: t.id,
+                                      });
+                                    }
                                   }}
                                 >
                                   Smazat
