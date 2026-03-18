@@ -155,6 +155,12 @@ function TaskModal({ task, onClose }) {
                 onChange={(e) => {
                   const newDeadline = { ...deadline, from: e.target.value };
                   setDeadline(newDeadline);
+                  if (
+                    newDeadline.from > newDeadline.to &&
+                    newDeadline.to !== ""
+                  ) {
+                    newDeadline.to = "";
+                  }
                   dispatch({
                     type: "UPDATE_DEADLINE",
                     payload: {
@@ -173,6 +179,12 @@ function TaskModal({ task, onClose }) {
                 onChange={(e) => {
                   const newDeadline = { ...deadline, to: e.target.value };
                   setDeadline(newDeadline);
+                  if (
+                    newDeadline.to < newDeadline.from &&
+                    newDeadline.from !== ""
+                  ) {
+                    newDeadline.from = "";
+                  }
                   dispatch({
                     type: "UPDATE_DEADLINE",
                     payload: {
