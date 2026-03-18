@@ -66,6 +66,9 @@ function reducer(state, action) {
             label: "",
             deadline: { from: "", to: "" },
             done: false,
+            order: state.tasks.filter((t) => {
+              return t.columnId === action.payload.columnId;
+            }).length,
           },
         ],
       };
@@ -241,6 +244,26 @@ function reducer(state, action) {
         tasks: state.tasks.map((t) => {
           if (t.id === action.payload.taskId) {
             return { ...t, columnId: action.payload.newColumnId };
+          } else {
+            return t;
+          }
+        }),
+      };
+    case "REORDER_TASKS":
+      const newTasks = state.tasks.filter((t) => {
+        return t.columnId === action.payload.newColumnId;
+      });
+      const orderedTasks = newTasks.sort((a, b) => a.order - b.order);
+      const removedTask = orderedTasks.splice(action.payload.sourceIndex, 1);
+      orderedTasks.splice(action.payload.destinationIndex, 0, removedTask[0]);
+      const reorderedTasks = orderedTasks.map((t, index) => {
+        return { ...t, order: index };
+      });
+      return {
+        ...state,
+        tasks: state.tasks.map((t) => {
+          if (t.columnId === action.payload.newColumnId) {
+            return reorderedTasks.find((r) => t.id === r.id);
           } else {
             return t;
           }

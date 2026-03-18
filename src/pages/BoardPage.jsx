@@ -28,15 +28,25 @@ function BoardPage() {
   }
 
   const handleDragEnd = (result) => {
-    console.log(result);
     if (!result.destination) return;
-    dispatch({
-      type: "MOVE_TASK",
-      payload: {
-        taskId: result.draggableId,
-        newColumnId: result.destination.droppableId,
-      },
-    });
+    if (result.source.droppableId === result.destination.droppableId) {
+      dispatch({
+        type: "REORDER_TASKS",
+        payload: {
+          sourceIndex: result.source.index,
+          destinationIndex: result.destination.index,
+          newColumnId: result.source.droppableId,
+        },
+      });
+    } else {
+      dispatch({
+        type: "MOVE_TASK",
+        payload: {
+          taskId: result.draggableId,
+          newColumnId: result.destination.droppableId,
+        },
+      });
+    }
   };
 
   return (
@@ -125,40 +135,42 @@ function BoardPage() {
                       {...provided.droppableProps}
                       ref={provided.innerRef}
                     >
-                      {columnTasks.map((t, index) => (
-                        <Draggable
-                          draggableId={String(t.id)}
-                          index={index}
-                          key={t.id}
-                        >
-                          {(provided) => (
-                            <div
-                              onClick={() => setSelectedTask(t)}
-                              className="task"
-                              {...provided.draggableProps}
-                              {...provided.dragHandleProps}
-                              ref={provided.innerRef}
-                            >
-                              <p className="task-title">{t.title}</p>
-                              {t.label && (
-                                <div className={`task-label ${t.label}`} />
-                              )}
-                              <button
-                                className="btn-delete"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  dispatch({
-                                    type: "DELETE_TASK",
-                                    payload: t.id,
-                                  });
-                                }}
+                      {[...columnTasks]
+                        .sort((a, b) => a.order - b.order)
+                        .map((t, index) => (
+                          <Draggable
+                            draggableId={String(t.id)}
+                            index={index}
+                            key={t.id}
+                          >
+                            {(provided) => (
+                              <div
+                                onClick={() => setSelectedTask(t)}
+                                className="task"
+                                {...provided.draggableProps}
+                                {...provided.dragHandleProps}
+                                ref={provided.innerRef}
                               >
-                                Smazat
-                              </button>
-                            </div>
-                          )}
-                        </Draggable>
-                      ))}
+                                <p className="task-title">{t.title}</p>
+                                {t.label && (
+                                  <div className={`task-label ${t.label}`} />
+                                )}
+                                <button
+                                  className="btn-delete"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    dispatch({
+                                      type: "DELETE_TASK",
+                                      payload: t.id,
+                                    });
+                                  }}
+                                >
+                                  Smazat
+                                </button>
+                              </div>
+                            )}
+                          </Draggable>
+                        ))}
                       {provided.placeholder}
                     </div>
                   )}
