@@ -2,12 +2,14 @@ import { useTask } from "../context/TaskContext";
 import BoardCard from "../components/BoardCard";
 import { useState } from "react";
 import { emojis } from "../utils/emojis";
+import BoardModal from "../components/BoardModal";
 
 function BoardsPage() {
   const { state, dispatch } = useTask();
   const [boardTitle, setBoardTitle] = useState("");
   const [selectedEmoji, setSelectedEmoji] = useState("");
   const [emojisOpend, setEmojisOpened] = useState(false);
+  const [editingBoard, setEditingBoard] = useState(null);
   return (
     <div className="boards-page">
       <h1 className="boards-page-title">Moje nástěnky</h1>
@@ -25,7 +27,12 @@ function BoardsPage() {
                 </button>
               );
             })}
-            <button className="btn-cancel" onClick={() => setEmojisOpened(false)}>← Zpět</button>
+            <button
+              className="btn-cancel"
+              onClick={() => setEmojisOpened(false)}
+            >
+              ← Zpět
+            </button>
           </div>
         ) : (
           <button
@@ -63,12 +70,19 @@ function BoardsPage() {
       <div className="boards-grid">
         {state.boards.map((b) => (
           <BoardCard
+            onEdit={() => setEditingBoard(b)}
             key={b.id}
             board={b}
             onDelete={() => dispatch({ type: "DELETE_BOARD", payload: b.id })}
           />
         ))}
       </div>
+      {editingBoard && (
+        <BoardModal
+          board={editingBoard}
+          onClose={() => setEditingBoard(null)}
+        />
+      )}
     </div>
   );
 }

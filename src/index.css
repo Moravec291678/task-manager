@@ -122,7 +122,6 @@ body {
   border-radius: 14px;
   padding: 20px;
   min-height: 100px;
-  cursor: pointer;
   transition: 0.15s;
   display: flex;
   flex-direction: column;
@@ -137,9 +136,9 @@ body {
 .board-wrapper {
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
   gap: 5px;
   align-items: center;
+  overflow: hidden;
 }
 
 .board-card-icon {
@@ -166,6 +165,41 @@ body {
   justify-content: space-between;
   align-items: center;
   margin-top: 12px;
+}
+
+.board-card-content {
+  flex: 1;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+}
+
+.board-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.board-card-edit-btn {
+  background: transparent;
+  border: none;
+  color: #888;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  letter-spacing: 2px;
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.board-card-edit-btn:hover {
+  background: #2a2a35;
+  color: #fff;
 }
 
 /* ================================================
@@ -201,6 +235,8 @@ body {
   padding: 16px;
   min-width: 280px;
   flex: 0 0 280px;
+  display: flex;
+  flex-direction: column;
 }
 
 .column-title {
@@ -312,6 +348,7 @@ body {
   gap: 10px;
   max-height: 500px;
   overflow-y: auto;
+  flex: 1;
 }
 
 /* ================================================
@@ -609,6 +646,12 @@ body {
 
 .modal-body {
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.board-modal-body {
+  gap: 10px;
 }
 
 .modal-footer {

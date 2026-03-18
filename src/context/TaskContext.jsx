@@ -234,6 +234,15 @@ function reducer(state, action) {
           (t) => !deletedColumnIds.includes(t.columnId),
         ),
       };
+    case "RENAME_BOARD":
+      return {
+        ...state,
+        boards: state.boards.map((b) => {
+          return b.id === action.payload.boardId
+            ? { ...b, title: action.payload.newTitle, icon: action.payload.newIcon }
+            : b;
+        }),
+      };
     case "MOVE_TASK":
       return {
         ...state,
