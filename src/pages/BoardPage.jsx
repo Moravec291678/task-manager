@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import TaskModal from "../components/TaskModal";
+import toast from "react-hot-toast";
 
 function BoardPage() {
   const { state, dispatch } = useTask();
@@ -71,6 +72,7 @@ function BoardPage() {
                                 title: renameColumnValue,
                               },
                             });
+                            toast.success("Sloupec přejmenován!");
                             setRenamingColumnId(null);
                           }
                           if (e.key === "Escape") {
@@ -92,6 +94,7 @@ function BoardPage() {
                               title: renameColumnValue,
                             },
                           });
+                          toast.success("Sloupec přejmenován!");
                           setRenamingColumnId(null);
                         }}
                       >
@@ -135,6 +138,7 @@ function BoardPage() {
                         onClick={() => {
                           if (window.confirm("Opravdu smazat?")) {
                             dispatch({ type: "DELETE_COLUMN", payload: c.id });
+                            toast.success("Sloupec smazán!");
                             setOpenMenu(null);
                           }
                         }}
@@ -180,6 +184,7 @@ function BoardPage() {
                                           type: "DELETE_TASK",
                                           payload: t.id,
                                         });
+                                        toast.success("Úkol smazán!");
                                       }
                                     }}
                                   >
@@ -187,9 +192,6 @@ function BoardPage() {
                                   </button>
                                 </div>
                                 <div className="task-footer">
-                                  {t.label && (
-                                    <div className={`task-label ${t.label}`} />
-                                  )}
                                   {t.deadline.to && (
                                     <p
                                       className="task-date"
@@ -204,6 +206,9 @@ function BoardPage() {
                                         t.deadline.to,
                                       ).toLocaleDateString("cs-CZ")}
                                     </p>
+                                  )}
+                                  {t.label && (
+                                    <div className={`task-label ${t.label}`} />
                                   )}
                                 </div>
                               </div>
@@ -230,6 +235,7 @@ function BoardPage() {
                           type: "ADD_TASK",
                           payload: { title: inputs[c.id], columnId: c.id },
                         });
+                        toast.success("Úkol přidán!");
                         setInputs({ ...inputs, [c.id]: "" });
                       }
                     }}
@@ -242,6 +248,7 @@ function BoardPage() {
                           type: "ADD_TASK",
                           payload: { title: inputs[c.id], columnId: c.id },
                         });
+                        toast.success("Úkol přidán!");
                         setInputs({ ...inputs, [c.id]: "" });
                       }
                     }}
@@ -264,6 +271,7 @@ function BoardPage() {
                         type: "ADD_COLUMN",
                         payload: { title: columnTitle, boardId: id },
                       });
+                      toast.success("Sloupec přidán!");
                       setColumnTitle("");
                       setShowInput(false);
                     }
@@ -287,6 +295,7 @@ function BoardPage() {
                           type: "ADD_COLUMN",
                           payload: { title: columnTitle, boardId: id },
                         });
+                        toast.success("Sloupec přidán!");
                         setColumnTitle("");
                         setShowInput(false);
                       }
@@ -315,7 +324,12 @@ function BoardPage() {
       </DragDropContext>
 
       {selectedTask && (
-        <TaskModal onClose={() => setSelectedTask(null)} task={selectedTask} />
+        <TaskModal
+          onClose={() => {
+            setSelectedTask(null);
+          }}
+          task={selectedTask}
+        />
       )}
     </div>
   );

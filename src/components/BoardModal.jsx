@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { emojis } from "../utils/emojis";
 import { useTask } from "../context/TaskContext";
-
+import toast from "react-hot-toast";
 
 function BoardModal({ board, onClose }) {
   const { state, dispatch } = useTask();
@@ -76,7 +76,9 @@ function BoardModal({ board, onClose }) {
                     newTitle: title,
                   },
                 });
+
                 onClose();
+                toast.success("Nástěnka upravena!");
               }}
             >
               Uložit

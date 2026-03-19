@@ -389,7 +389,7 @@ body {
 .task-footer {
   display: flex;
   flex-direction: row;
-  gap: 10px;
+  gap: 5px;
   justify-content: start;
   align-items: center;
 }

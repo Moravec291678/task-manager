@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useTask } from "../context/TaskContext";
+import toast from "react-hot-toast";
 
 function TaskModal({ task, onClose }) {
   const [taskDesc, setTaskDesc] = useState("");
@@ -79,6 +80,7 @@ function TaskModal({ task, onClose }) {
                   payload: { taskId: task.id, newTitle: taskTitle },
                 });
                 setChangeTitle(false);
+                toast.success("Název úkolu uložen!");
               }}
             >
               Uložit
@@ -256,6 +258,7 @@ function TaskModal({ task, onClose }) {
                         payload: { taskId: task.id, desc: taskDesc },
                       });
                       setChangeDesc(false);
+                      toast.success("Popis uložen!");
                     }}
                   >
                     Uložit
@@ -299,6 +302,7 @@ function TaskModal({ task, onClose }) {
                       payload: { taskId: currentTask.id, text: commentText },
                     });
                     setCommentText("");
+                    toast.success("Komentář přidán!");
                   }
                 }}
               >
@@ -331,6 +335,7 @@ function TaskModal({ task, onClose }) {
                           });
                           setEditingCommentId(null);
                           setEditingCommentText("");
+                          toast.success("Komentář upraven!");
                         }}
                       >
                         Uložit
@@ -371,6 +376,7 @@ function TaskModal({ task, onClose }) {
                                 taskId: currentTask.id,
                               },
                             });
+                            toast.success("Komentář smazán!");
                           }
                         }}
                       >

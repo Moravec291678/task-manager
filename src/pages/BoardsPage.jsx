@@ -3,7 +3,7 @@ import BoardCard from "../components/BoardCard";
 import { useEffect, useState } from "react";
 import { emojis } from "../utils/emojis";
 import BoardModal from "../components/BoardModal";
-
+import toast from "react-hot-toast";
 function BoardsPage() {
   const { state, dispatch } = useTask();
   const [boardTitle, setBoardTitle] = useState("");
@@ -64,6 +64,7 @@ function BoardsPage() {
                 type: "ADD_BOARD",
                 payload: { title: boardTitle, emoji: selectedEmoji },
               });
+              toast.success("Nástěnka přidána!");
               setBoardTitle("");
               setEmojisOpened(false);
             }
@@ -81,6 +82,7 @@ function BoardsPage() {
                 type: "ADD_BOARD",
                 payload: { title: boardTitle, emoji: selectedEmoji },
               });
+              toast.success("Nástěnka přidána!");
               setBoardTitle("");
               setEmojisOpened(false);
             }
@@ -92,7 +94,6 @@ function BoardsPage() {
 
       {state.boards.length === 0 && (
         <div className="noBoards">
-          
           <span>{selectedEmoji || "🙂"}</span>
           <h2>Zatím nemáš žádné nástěnky</h2>
           <p>Vytvoř první kliknutím na tlačítko Přidat</p>
@@ -104,14 +105,17 @@ function BoardsPage() {
             onEdit={() => setEditingBoard(b)}
             key={b.id}
             board={b}
-            onDelete={() => dispatch({ type: "DELETE_BOARD", payload: b.id })}
+            onDelete={() => {
+              dispatch({ type: "DELETE_BOARD", payload: b.id });
+              toast.success("Nástěnka smazána!");
+            }}
           />
         ))}
       </div>
       {editingBoard && (
         <BoardModal
           board={editingBoard}
-          onClose={() => setEditingBoard(null)}
+          onClose={() => {setEditingBoard(null);}}
         />
       )}
     </div>
