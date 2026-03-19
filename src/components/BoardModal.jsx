@@ -17,7 +17,26 @@ function BoardModal({ board, onClose }) {
   }, [onClose]);
   return (
     <div className="overlay" onClick={onClose}>
-      <div className="modal" onClick={(e) => e.stopPropagation()}>
+      <div
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            dispatch({
+              type: "RENAME_BOARD",
+              payload: {
+                boardId: board.id,
+                newIcon: selectedEmoji,
+                newTitle: title,
+              },
+            });
+
+            onClose();
+
+            toast.success("Nástěnka upravena!");
+          }
+        }}
+        className="modal"
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="modal-header">
           <span>Upravit nástěnku</span>
           <button className="modal-close" onClick={onClose}>
