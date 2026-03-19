@@ -244,8 +244,8 @@ body {
   border: 1px solid #2a2a35;
   border-radius: 14px;
   padding: 16px;
-  min-width: 280px;
-  flex: 0 0 280px;
+  min-width: 290px;
+  flex: 0 0 290px;
   display: flex;
   flex-direction: column;
 }
@@ -376,6 +376,7 @@ body {
   justify-content: space-between;
   flex-wrap: wrap;
   flex-direction: column;
+  gap: 7px;
 }
 
 .task-header {
@@ -400,12 +401,15 @@ body {
 }
 
 .task-title {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 500;
   flex: 1;
+  word-break: break-word;
+  white-space: normal;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 /* ---- Štítek priority na kartě úkolu ---- */
