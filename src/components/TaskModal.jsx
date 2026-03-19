@@ -44,6 +44,14 @@ function TaskModal({ task, onClose }) {
   useEffect(() => {
     setTaskTitle(currentTask?.title || "");
   }, [currentTask]);
+
+  useEffect(() => {
+    const handleKey = (e) => {
+      e.key === "Escape" && onClose();
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [onClose]);
   if (!task) return null;
 
   return (

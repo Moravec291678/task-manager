@@ -1,12 +1,20 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { emojis } from "../utils/emojis";
 import { useTask } from "../context/TaskContext";
+
 
 function BoardModal({ board, onClose }) {
   const { state, dispatch } = useTask();
   const [title, setTitle] = useState(board.title || "");
   const [emojisOpend, setEmojisOpened] = useState(false);
   const [selectedEmoji, setSelectedEmoji] = useState(board.icon || "");
+  useEffect(() => {
+    const handleKey = (e) => {
+      e.key === "Escape" && onClose();
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [onClose]);
   return (
     <div className="overlay" onClick={onClose}>
       <div className="modal" onClick={(e) => e.stopPropagation()}>

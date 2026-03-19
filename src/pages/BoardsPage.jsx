@@ -1,6 +1,6 @@
 import { useTask } from "../context/TaskContext";
 import BoardCard from "../components/BoardCard";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { emojis } from "../utils/emojis";
 import BoardModal from "../components/BoardModal";
 
@@ -8,13 +8,20 @@ function BoardsPage() {
   const { state, dispatch } = useTask();
   const [boardTitle, setBoardTitle] = useState("");
   const [selectedEmoji, setSelectedEmoji] = useState("");
-  const [emojisOpend, setEmojisOpened] = useState(false);
+  const [emojisOpened, setEmojisOpened] = useState(false);
   const [editingBoard, setEditingBoard] = useState(null);
   return (
-    <div className="boards-page">
+    <div
+      className="boards-page"
+      onKeyDown={(e) => {
+        if (e.key === "Escape" && emojisOpened) {
+          setEmojisOpened(false);
+        }
+      }}
+    >
       <h1 className="boards-page-title">Moje nástěnky</h1>
       <div className="boards-add">
-        {emojisOpend ? (
+        {emojisOpened ? (
           <div className="emoji-grid">
             {emojis.map((emoji) => {
               return (
@@ -50,6 +57,20 @@ function BoardsPage() {
           placeholder="Název nástěnky..."
           value={boardTitle}
           onChange={(e) => setBoardTitle(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && boardTitle) {
+              dispatch({
+                type: "ADD_BOARD",
+                payload: { title: boardTitle, emoji: selectedEmoji },
+              });
+              setBoardTitle("");
+              setEmojisOpened(false);
+            }
+            if (e.key === "Escape") {
+              setBoardTitle("");
+              setEmojisOpened(false);
+            }
+          }}
         />
         <button
           className="btn-add"

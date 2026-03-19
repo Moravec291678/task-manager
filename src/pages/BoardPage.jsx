@@ -62,6 +62,21 @@ function BoardPage() {
                   {renamingColumnId === c.id ? (
                     <div className="column-rename">
                       <input
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            dispatch({
+                              type: "RENAME_COLUMN",
+                              payload: {
+                                columnId: c.id,
+                                title: renameColumnValue,
+                              },
+                            });
+                            setRenamingColumnId(null);
+                          }
+                          if (e.key === "Escape") {
+                            setRenamingColumnId(null);
+                          }
+                        }}
                         className="column-rename-input"
                         type="text"
                         value={renameColumnValue}
@@ -189,6 +204,15 @@ function BoardPage() {
                     onChange={(e) =>
                       setInputs({ ...inputs, [c.id]: e.target.value })
                     }
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" && inputs[c.id]) {
+                        dispatch({
+                          type: "ADD_TASK",
+                          payload: { title: inputs[c.id], columnId: c.id },
+                        });
+                        setInputs({ ...inputs, [c.id]: "" });
+                      }
+                    }}
                   />
                   <button
                     className="btn-add"
@@ -214,6 +238,20 @@ function BoardPage() {
             {showInput ? (
               <div className="column-add-new-form">
                 <input
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && columnTitle) {
+                      dispatch({
+                        type: "ADD_COLUMN",
+                        payload: { title: columnTitle, boardId: id },
+                      });
+                      setColumnTitle("");
+                      setShowInput(false);
+                    }
+                    if (e.key === "Escape") {
+                      setColumnTitle("");
+                      setShowInput(false);
+                    }
+                  }}
                   className="column-add-new-input"
                   type="text"
                   placeholder="Název sloupce..."
