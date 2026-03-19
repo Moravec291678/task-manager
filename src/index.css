@@ -71,6 +71,17 @@ body {
 /* ================================================
    STRÁNKA NÁSTĚNEK
    ================================================ */
+.noBoards {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  height: 40vh;
+  justify-content: center;
+}
+
+.noBoards span {
+  font-size: 70px;
+}
 
 .boards-page-title {
   font-size: 26px;
@@ -363,9 +374,24 @@ body {
   transition: 0.15s;
   display: flex;
   justify-content: space-between;
-  align-items: center;
   flex-wrap: wrap;
-  gap: 8px;
+  flex-direction: column;
+}
+
+.task-header {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.task-footer {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  justify-content: start;
+  align-items: center;
 }
 
 .task:hover {
@@ -401,6 +427,10 @@ body {
 
 .task-label.low {
   background: #4ecdc4;
+}
+
+.task-date {
+  font-size: 10px;
 }
 
 /* ---- Přidat úkol ---- */

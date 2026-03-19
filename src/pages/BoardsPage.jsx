@@ -10,6 +10,7 @@ function BoardsPage() {
   const [selectedEmoji, setSelectedEmoji] = useState("");
   const [emojisOpened, setEmojisOpened] = useState(false);
   const [editingBoard, setEditingBoard] = useState(null);
+
   return (
     <div
       className="boards-page"
@@ -88,6 +89,15 @@ function BoardsPage() {
           Přidat
         </button>
       </div>
+
+      {state.boards.length === 0 && (
+        <div className="noBoards">
+          
+          <span>{selectedEmoji || "🙂"}</span>
+          <h2>Zatím nemáš žádné nástěnky</h2>
+          <p>Vytvoř první kliknutím na tlačítko Přidat</p>
+        </div>
+      )}
       <div className="boards-grid">
         {state.boards.map((b) => (
           <BoardCard

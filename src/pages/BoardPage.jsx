@@ -168,24 +168,44 @@ function BoardPage() {
                                 {...provided.dragHandleProps}
                                 ref={provided.innerRef}
                               >
-                                <p className="task-title">{t.title}</p>
-                                {t.label && (
-                                  <div className={`task-label ${t.label}`} />
-                                )}
-                                <button
-                                  className="btn-delete"
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    if (window.confirm("Opravdu smazat?")) {
-                                      dispatch({
-                                        type: "DELETE_TASK",
-                                        payload: t.id,
-                                      });
-                                    }
-                                  }}
-                                >
-                                  Smazat
-                                </button>
+                                <div className="task-header">
+                                  <p className="task-title">{t.title}</p>
+
+                                  <button
+                                    className="btn-delete"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      if (window.confirm("Opravdu smazat?")) {
+                                        dispatch({
+                                          type: "DELETE_TASK",
+                                          payload: t.id,
+                                        });
+                                      }
+                                    }}
+                                  >
+                                    Smazat
+                                  </button>
+                                </div>
+                                <div className="task-footer">
+                                  {t.label && (
+                                    <div className={`task-label ${t.label}`} />
+                                  )}
+                                  {t.deadline.to && (
+                                    <p
+                                      className="task-date"
+                                      style={{
+                                        color:
+                                          new Date(t.deadline.to) < new Date()
+                                            ? "#ff6b6b"
+                                            : "#888",
+                                      }}
+                                    >
+                                      {new Date(
+                                        t.deadline.to,
+                                      ).toLocaleDateString("cs-CZ")}
+                                    </p>
+                                  )}
+                                </div>
                               </div>
                             )}
                           </Draggable>
